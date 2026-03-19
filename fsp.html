@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PDSB Community Gap Analysis — Stuart Gitau</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --ink: #12131A;
+      --navy: #1B2A4A;
+      --blue: #2C4A8C;
+      --accent: #4B7BE5;
+      --accent-pale: #E8EEFB;
+      --sand: #F6F7FA;
+      --muted: #5A5F7A;
+      --border: #D0D5E8;
+      --white: #FFFFFF;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lora', serif; background: var(--sand); color: var(--ink); font-size: 17px; line-height: 1.75; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 4vw;
+      background: rgba(246,247,250,0.92); backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-back { font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--blue); text-decoration: none; display: flex; align-items: center; gap: 0.4rem; }
+    .nav-back:hover { color: var(--navy); }
+    .nav-title { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--ink); opacity: 0.4; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 8rem 4vw 5rem; background: var(--navy); position: relative; overflow: hidden;
+    }
+    .hero-dots {
+      position: absolute; inset: 0;
+      background-image: radial-gradient(rgba(75,123,229,0.18) 1.5px, transparent 1.5px);
+      background-size: 36px 36px;
+    }
+    .hero-arc {
+      position: absolute; bottom: -30%; right: -10%;
+      width: 70vw; height: 70vw; max-width: 700px; max-height: 700px;
+      border-radius: 50%; border: 1px solid rgba(75,123,229,0.12);
+    }
+    .hero-arc::after { content: ''; position: absolute; inset: 60px; border-radius: 50%; border: 1px solid rgba(75,123,229,0.08); }
+    .hero-content { position: relative; z-index: 1; max-width: 820px; }
+    .hero-tag { font-family: 'Syne', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.6rem; }
+    .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .hero h1 { font-family: 'Syne', sans-serif; font-size: clamp(2.4rem, 5vw, 4.2rem); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: var(--white); margin-bottom: 1.5rem; }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub { font-size: 1.05rem; color: rgba(255,255,255,0.55); max-width: 560px; line-height: 1.8; margin-bottom: 3rem; }
+    .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; }
+    .hero-stat .num { font-family: 'Syne', sans-serif; font-size: 2.2rem; font-weight: 800; color: var(--accent); line-height: 1; }
+    .hero-stat .label { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 0.2rem; font-family: 'Syne', sans-serif; text-transform: uppercase; letter-spacing: 0.06em; }
+
+    /* SECTIONS */
+    .section { padding: 6rem 4vw; }
+    .section-inner { max-width: 860px; margin: 0 auto; }
+    .section-label { font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem; }
+    h2 { font-family: 'Syne', sans-serif; font-size: clamp(1.6rem, 2.8vw, 2.3rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.015em; color: var(--navy); margin-bottom: 1.75rem; }
+    p { color: var(--muted); margin-bottom: 1.2rem; }
+
+    /* OVERVIEW */
+    .overview { background: var(--white); }
+    .callout { background: var(--accent-pale); border-left: 3px solid var(--accent); border-radius: 0 0.75rem 0.75rem 0; padding: 1.25rem 1.5rem; margin: 2rem 0; font-style: italic; color: var(--navy); font-size: 0.98rem; }
+
+    /* PROGRAM EXPLORER */
+    .explorer-section { background: var(--sand); }
+    .explorer-controls { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .filter-btn {
+      font-family: 'Syne', sans-serif; font-size: 0.78rem; font-weight: 600;
+      padding: 0.4rem 1rem; border-radius: 2rem; cursor: pointer;
+      border: 1.5px solid var(--border); background: var(--white); color: var(--muted);
+      transition: all 0.2s; letter-spacing: 0.04em;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--navy); border-color: var(--navy); color: var(--white); }
+    .programs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+    .program-card {
+      background: var(--white); border: 1px solid var(--border); border-radius: 1rem;
+      padding: 1.25rem; transition: transform 0.2s, border-color 0.2s;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .program-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .prog-area { font-family: 'Syne', sans-serif; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+    .prog-name { font-family: 'Syne', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--navy); line-height: 1.3; }
+    .prog-org { font-size: 0.82rem; color: var(--muted); }
+    .prog-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.3rem; }
+    .prog-tag { background: var(--sand); color: var(--muted); padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-size: 0.72rem; font-family: 'Syne', sans-serif; border: 1px solid var(--border); }
+    .prog-tag.free { background: #EBF5EB; color: #2D6A2D; border-color: #C3E0C3; }
+    .prog-count { font-family: 'Syne', sans-serif; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.75rem; }
+
+    /* GAPS SECTION */
+    .gaps-section { background: var(--navy); }
+    .gaps-section h2 { color: var(--white); }
+    .gaps-section .section-label { color: var(--accent); }
+    .gaps-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; margin-top: 2rem; }
+    .gap-card {
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(75,123,229,0.2);
+      border-radius: 1rem; padding: 1.5rem; transition: background 0.2s;
+    }
+    .gap-card:hover { background: rgba(255,255,255,0.08); }
+    .gap-icon { font-size: 1.4rem; margin-bottom: 0.75rem; }
+    .gap-card h3 { font-family: 'Syne', sans-serif; font-size: 0.9rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 0.4rem; }
+    .gap-card p { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin: 0; }
+
+    /* AREA BREAKDOWN */
+    .breakdown-section { background: var(--white); }
+    .donut-wrap { display: grid; grid-template-columns: 260px 1fr; gap: 3rem; align-items: center; margin-top: 2rem; }
+    .legend { display: flex; flex-direction: column; gap: 1rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.75rem; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+    .legend-label { font-family: 'Syne', sans-serif; font-size: 0.85rem; color: var(--muted); }
+    .legend-num { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-left: auto; }
+
+    /* METHODOLOGY */
+    .method-section { background: var(--sand); }
+    .method-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+    .method-card { background: var(--white); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; }
+    .method-card h3 { font-family: 'Syne', sans-serif; font-size: 0.88rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+    .method-card p { font-size: 0.85rem; margin: 0; }
+
+    .fade { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade.in { opacity: 1; transform: none; }
+
+    @media (max-width: 600px) {
+      .donut-wrap { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-back" href="index.html">← Back to Portfolio</a>
+  <span class="nav-title">PDSB Gap Analysis</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-dots"></div>
+  <div class="hero-arc"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Community Research · Peel Region 2025</div>
+    <h1>Mapping the <span>Gaps</span><br/>in Peel's Student<br/>Support System</h1>
+    <p class="hero-sub">
+      A three-day community needs assessment with Family Services of Peel, mapping 31 programs
+      across the Peel District School Board — and identifying the students falling through the cracks.
+    </p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">31</div><div class="label">Programs mapped</div></div>
+      <div class="hero-stat"><div class="num">4</div><div class="label">Service areas</div></div>
+      <div class="hero-stat"><div class="num">5</div><div class="label">Team members</div></div>
+      <div class="hero-stat"><div class="num">3</div><div class="label">Days in field</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section class="section overview">
+  <div class="section-inner fade">
+    <p class="section-label">Project Overview</p>
+    <h2>Why this work mattered</h2>
+    <p>
+      The Peel District School Board serves one of Ontario's most diverse communities — with a
+      significant population of newcomer families, students with disabilities, and youth from
+      marginalized groups. While PDSB has a range of programs in place, the landscape is fragmented:
+      resources spread across multiple providers, some with fees, many hard to find.
+    </p>
+    <p>
+      During Alternative Reading Week, I co-led a five-person team on a three-day engagement
+      with Family Services of Peel. Our task: map every available student and community support
+      program, identify gaps in coverage, and produce a structured analysis for FSP's senior staff.
+    </p>
+    <div class="callout">
+      "PDSB's 2023 Community Engagement and Outreach Plan notes the school board's prioritization of
+      historically marginalized groups — but our analysis found significant gaps that leave many
+      students without targeted support."
+    </div>
+    <p>
+      The findings fed directly into FSP's planning for future program development, with particular
+      focus on youth language support, mental health for marginalized groups, and accessibility of
+      program information.
+    </p>
+  </div>
+</section>
+
+<!-- PROGRAM EXPLORER -->
+<section class="section explorer-section">
+  <div class="section-inner fade">
+    <p class="section-label">Program Database</p>
+    <h2>Explore the 31 programs mapped</h2>
+    <p>Filter by service area to browse what exists — and to see where the coverage thins out.</p>
+    <div class="explorer-controls">
+      <button class="filter-btn active" onclick="filterPrograms('all', this)">All (31)</button>
+      <button class="filter-btn" onclick="filterPrograms('Students Programs & Learning', this)">Student Programs (15)</button>
+      <button class="filter-btn" onclick="filterPrograms('Community Support & Programs', this)">Community Support (10)</button>
+      <button class="filter-btn" onclick="filterPrograms('Online Learning Programs', this)">Online Learning (5)</button>
+      <button class="filter-btn" onclick="filterPrograms('Staff Programs', this)">Staff (1)</button>
+    </div>
+    <p class="prog-count" id="progCount">Showing 31 programs</p>
+    <div class="programs-grid" id="programsGrid"></div>
+  </div>
+</section>
+
+<!-- AREA BREAKDOWN -->
+<section class="section breakdown-section">
+  <div class="section-inner fade">
+    <p class="section-label">Distribution</p>
+    <h2>Where the resources are concentrated</h2>
+    <div class="donut-wrap">
+      <svg viewBox="0 0 200 200" width="220" xmlns="http://www.w3.org/2000/svg">
+        <!-- Student Programs 15/31 = 174.2° -->
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#E8EEFB" stroke-width="28"/>
+        <!-- Student: 15/31 -->
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#2C4A8C" stroke-width="28" stroke-dasharray="142 297" stroke-dashoffset="0" transform="rotate(-90 100 100)"/>
+        <!-- Community: 10/31 -->
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#4B7BE5" stroke-width="28" stroke-dasharray="95 344" stroke-dashoffset="-142" transform="rotate(-90 100 100)"/>
+        <!-- Online: 5/31 -->
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#7BA7F0" stroke-width="28" stroke-dasharray="47 392" stroke-dashoffset="-237" transform="rotate(-90 100 100)"/>
+        <!-- Staff: 1/31 -->
+        <circle cx="100" cy="100" r="70" fill="none" stroke="#B8CFFA" stroke-width="28" stroke-dasharray="10 429" stroke-dashoffset="-284" transform="rotate(-90 100 100)"/>
+        <text x="100" y="96" text-anchor="middle" font-family="Syne,sans-serif" font-size="22" font-weight="800" fill="#1B2A4A">31</text>
+        <text x="100" y="114" text-anchor="middle" font-family="Syne,sans-serif" font-size="10" fill="#5A5F7A">programs</text>
+      </svg>
+      <div class="legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#2C4A8C"></div>
+          <span class="legend-label">Student Programs & Learning</span>
+          <span class="legend-num">15</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#4B7BE5"></div>
+          <span class="legend-label">Community Support & Programs</span>
+          <span class="legend-num">10</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#7BA7F0"></div>
+          <span class="legend-label">Online Learning Programs</span>
+          <span class="legend-num">5</span>
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#B8CFFA"></div>
+          <span class="legend-label">Staff Programs</span>
+          <span class="legend-num">1</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GAPS -->
+<section class="section gaps-section">
+  <div class="section-inner fade">
+    <p class="section-label">Key Findings</p>
+    <h2>The gaps the data revealed</h2>
+    <div class="gaps-grid">
+      <div class="gap-card">
+        <div class="gap-icon">🌍</div>
+        <h3>No ESL/LINC for Youth</h3>
+        <p>Language support programs exist only for adults. Newcomer youth navigating a new school system have no dedicated language access point.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-icon">🏳️‍🌈</div>
+        <h3>Limited Marginalized Youth Programs</h3>
+        <p>Few targeted programs for Black students, 2SLGBTQ+ youth, students experiencing homelessness, or students in care.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-icon">♿</div>
+        <h3>Disability Accommodations Inaccessible</h3>
+        <p>IEP and assistive technology information is difficult to find. No one-on-one services for parents seeking disability support.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-icon">💰</div>
+        <h3>Cost Barriers</h3>
+        <p>Language courses cost up to $1,500 per credit. Low-income students are systematically excluded from enrichment programs.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-icon">👦</div>
+        <h3>Male Youth Underserved</h3>
+        <p>Mental health and wellness programs are heavily female-focused. EFRY Hope planned a boys' program but could not secure funding.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-icon">🔍</div>
+        <h3>Navigation Difficulty</h3>
+        <p>Outdated links, fragmented websites, and no centralised resource hub make it hard for families to find what exists.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-icon">💻</div>
+        <h3>Tech & Financial Literacy</h3>
+        <p>Students expressed strong desire for AI literacy and financial literacy programs. Current offerings are limited and not universally accessible.</p>
+      </div>
+      <div class="gap-card">
+        <div class="gap-icon">🎓</div>
+        <h3>Special Education Gaps</h3>
+        <p>Students in special education can only join standard programs — no dedicated programs tailored to their specific learning goals.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- METHODOLOGY -->
+<section class="section method-section">
+  <div class="section-inner fade">
+    <p class="section-label">Methodology</p>
+    <h2>How the assessment was conducted</h2>
+    <div class="method-grid">
+      <div class="method-card">
+        <h3>Program Mapping</h3>
+        <p>Systematic review of all PDSB-linked programs — recording provider, target group, age range, cost, access method, and contact info into a structured database.</p>
+      </div>
+      <div class="method-card">
+        <h3>Student Consultation</h3>
+        <p>Direct input gathered from students on unmet needs — financial literacy, tech literacy, digital safety, and media creation emerged as key themes.</p>
+      </div>
+      <div class="method-card">
+        <h3>Gap Analysis</h3>
+        <p>Cross-referenced available programs against demographic need data from PDSB's 2023 Community Engagement Plan to identify structural coverage gaps.</p>
+      </div>
+      <div class="method-card">
+        <h3>Notion Documentation</h3>
+        <p>All findings and project management tracked in Notion, with structured markdown outputs shared with FSP senior staff for operational use.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+const programs = [
+  { name: "Employee Family Assistance Program (EFAP)", org: "PDSB", area: "Staff Programs ", type: "Mental Health & Wellness", cost: "Free", access: "Phone + Online" },
+  { name: "Adult & Continuing Education", org: "PDSB", area: "Online Learning Programs", type: "Academic / Language", cost: "Free (most)", access: "Virtual + In-person" },
+  { name: "Night School eLearning", org: "PDSB Continuing Ed", area: "Online Learning Programs", type: "Academic Credits", cost: "Free", access: "Virtual" },
+  { name: "Summer School eLearning", org: "PDSB Continuing Ed", area: "Online Learning Programs", type: "Academic Credits", cost: "Free", access: "Online" },
+  { name: "Intermediate Alternative Program (IAP)", org: "PDSB", area: "Students Programs & Learning", type: "Academic Support", cost: "Free", access: "In-person" },
+  { name: "We Welcome the World Centre", org: "PDSB", area: "Students Programs & Learning", type: "Newcomer Support", cost: "Free", access: "In-person" },
+  { name: "Play Wonder Learn", org: "PDSB", area: "Students Programs & Learning", type: "Parent Education", cost: "Free", access: "In-person" },
+  { name: "eLearning Course Selection (MyBlueprint)", org: "PDSB", area: "Online Learning Programs", type: "Course Planning", cost: "Free", access: "Online" },
+  { name: "Camp Possible", org: "PDSB", area: "Students Programs & Learning", type: "Special Education / Skills", cost: "Free", access: "In-person" },
+  { name: "Peel eLearning / OeLC", org: "PDSB + OeLC", area: "Online Learning Programs", type: "Academic Credits", cost: "Free", access: "Virtual" },
+  { name: "Let's Be Real", org: "Unsinkable Youth", area: "Community Support & Programs", type: "Personal Growth", cost: "Free", access: "Online" },
+  { name: "Mathify", org: "TVO Learn", area: "Students Programs & Learning", type: "Math Tutoring", cost: "Free", access: "Virtual" },
+  { name: "English Conversation Circles", org: "Peel Multicultural Council", area: "Students Programs & Learning", type: "Language", cost: "Free", access: "Online" },
+  { name: "DIY Bike Hub", org: "Peel Multicultural Council", area: "Community Support & Programs", type: "Skills / Volunteer", cost: "Free", access: "In-person" },
+  { name: "Financial Literacy Project", org: "Peel Multicultural Council", area: "Students Programs & Learning", type: "Financial Literacy", cost: "Free", access: "Online" },
+  { name: "Youth Social Nights", org: "Peel Multicultural Council", area: "Students Programs & Learning", type: "Community Building", cost: "Free", access: "In-person" },
+  { name: "One-on-One Services", org: "Peel Multicultural Council", area: "Students Programs & Learning", type: "Guidance Counselling", cost: "Free", access: "In-person" },
+  { name: "Bright Hope SFA Program", org: "Patches 360", area: "Community Support & Programs", type: "Family Support", cost: "Free", access: "Hybrid" },
+  { name: "ReNEW Concussion Transition Program", org: "Mind Forward", area: "Community Support & Programs", type: "Physical Health", cost: "Free", access: "Hybrid" },
+  { name: "Ethno-cultural Communities Well-being", org: "MIAG Centre", area: "Community Support & Programs", type: "Counselling", cost: "Free", access: "In-person" },
+  { name: "Mental Health for Newcomers & Refugees", org: "LAMP Community Health", area: "Community Support & Programs", type: "Mental Health", cost: "Free", access: "Hybrid" },
+  { name: "Active Parenting Program", org: "Family Services of Peel", area: "Community Support & Programs", type: "Parental Support", cost: "Free", access: "In-person" },
+  { name: "Parent Support Group", org: "HOME", area: "Community Support & Programs", type: "Parental Support", cost: "$50+", access: "Hybrid" },
+  { name: "International & Indigenous Languages", org: "PDSB", area: "Students Programs & Learning", type: "Language Courses", cost: "$1,500/credit", access: "Hybrid" },
+  { name: "Babysitter Training Course", org: "FiveSaveLife", area: "Students Programs & Learning", type: "Skills Training", cost: "Free", access: "Online" },
+  { name: "Home Alone Program", org: "FiveSaveLife", area: "Community Support & Programs", type: "Safety Skills", cost: "Free", access: "Online" },
+  { name: "Building Resilience in Girls (BRG)", org: "EFRY Hope", area: "Students Programs & Learning", type: "Mental Health", cost: "Free", access: "In-person" },
+  { name: "Empowering Against Exploitation", org: "EFRY Hope", area: "Students Programs & Learning", type: "Prevention", cost: "Free", access: "In-person" },
+  { name: "McNeil Academy (Section 23)", org: "EFRY Hope", area: "Students Programs & Learning", type: "Community Building", cost: "Free", access: "In-person" },
+  { name: "Female Mobile Support", org: "EFRY Hope", area: "Students Programs & Learning", type: "Crisis Intervention", cost: "Free", access: "Online" },
+  { name: "Active Parenting Program (FSP)", org: "Family Services of Peel", area: "Community Support & Programs", type: "Parental Support", cost: "Free", access: "In-person" },
+];
+
+let activeFilter = 'all';
+
+function filterPrograms(area, btn) {
+  activeFilter = area;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderPrograms();
+}
+
+function renderPrograms() {
+  const grid = document.getElementById('programsGrid');
+  const count = document.getElementById('progCount');
+  const filtered = activeFilter === 'all' ? programs : programs.filter(p => p.area.trim() === activeFilter.trim());
+  count.textContent = `Showing ${filtered.length} program${filtered.length !== 1 ? 's' : ''}`;
+  grid.innerHTML = filtered.map(p => `
+    <div class="program-card">
+      <div class="prog-area">${p.area.trim()}</div>
+      <div class="prog-name">${p.name}</div>
+      <div class="prog-org">${p.org}</div>
+      <div class="prog-meta">
+        <span class="prog-tag ${p.cost === 'Free' ? 'free' : ''}">${p.cost}</span>
+        <span class="prog-tag">${p.access}</span>
+        <span class="prog-tag">${p.type}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+renderPrograms();
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => { if (e.isIntersecting) setTimeout(() => e.target.classList.add('in'), i * 100); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+</script>
+<!-- NEXT PROJECT -->
+<section style="background: var(--sand); padding: 4rem 4vw; border-top: 1px solid var(--border);">
+  <div style="max-width: 860px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+    <a href="lewa.html" style="display: flex; flex-direction: column; align-items: flex-start; text-decoration: none; background: var(--white); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem 1.5rem; transition: border-color 0.2s, transform 0.2s;" onmouseover="this.style.borderColor='var(--accent)';this.style.transform='translateY(-2px)'" onmouseout="this.style.borderColor='var(--border)';this.style.transform='none'">
+      <span style="font-family: 'Syne', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem;">← Previous Project</span>
+      <span style="font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy);">Lewa Wildlife AI Detection</span>
+    </a>
+    <a href="index.html" style="font-family: 'Syne', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); text-decoration: none;">All Projects →</a>
+  </div>
+</section>
+
+</body>
+</html>
