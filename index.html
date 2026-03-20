@@ -73,17 +73,14 @@ Output
     .aside-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage-mid); margin-bottom: 0.4rem; }
     .aside-item p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin: 0; }
 
-    /* ── PROJECTS TIMELINE ── */
+    /* ── PROJECTS ── */
     #projects { background: var(--cream); }
-    .timeline { margin-top: 3rem; position: relative; padding-left: 2rem; }
-    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1.5px; background: var(--border); }
-    .timeline-entry { position: relative; margin-bottom: 2.5rem; padding-left: 2rem; }
-    .timeline-entry:last-child { margin-bottom: 0; }
-    .timeline-dot { position: absolute; left: -2.4rem; top: 1.2rem; width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--white); box-shadow: 0 0 0 1.5px currentColor; }
-    .dot-blue { color: #3B6FD4; background: #3B6FD4; }
-    .dot-green { color: #2D7A4F; background: #2D7A4F; }
-    .dot-red { color: #C0392B; background: #C0392B; }
-    .timeline-date { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+    .projects-grid { margin-top: 3rem; display: flex; flex-direction: column; gap: 3.5rem; }
+    .project-group {}
+    .group-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
+    .group-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--forest); }
+    .group-date { font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; }
+    .group-cards { display: flex; flex-direction: column; gap: 0.75rem; }
     .project-card { background: var(--white); border: 1px solid var(--border); border-radius: 1.25rem; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; display: flex; text-decoration: none; color: inherit; }
     .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(28,61,46,0.1); }
     .project-card.no-link { cursor: default; }
@@ -105,9 +102,6 @@ Output
     .tech-badge { background: var(--cream); color: var(--muted); padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-size: 0.7rem; font-family: monospace; border: 1px solid var(--border); }
     .card-arrow { margin-left: auto; font-size: 0.75rem; font-weight: 600; color: var(--sage-mid); letter-spacing: 0.04em; text-transform: uppercase; }
     .project-card:hover .card-arrow { color: var(--forest); }
-    .timeline-legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--muted); }
-    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
 
     /* ── COLLABORATORS ── */
     #collaborators { background: var(--sand); }
@@ -237,69 +231,62 @@ Output
   <p class="section-label fade-up">Projects</p>
   <h2 class="fade-up">Selected work</h2>
 
-  <div class="timeline fade-up">
+  <div class="projects-grid fade-up">
 
-    <!-- April 2025 — Sheridan Creek -->
-    <div class="timeline-entry">
-      <div class="timeline-dot dot-red"></div>
-      <div class="timeline-date">April 2025</div>
-      <div class="project-card no-link">
-        <div class="card-color-bar bar-red"></div>
-        <div class="card-body">
-          <div class="card-type">
-            <span class="type-badge badge-red">Academic · Solo</span>
-            <span class="card-tag">Urban Ecology · Restoration Planning · Mississauga</span>
-          </div>
-          <h3>Sheridan Creek Ecological Corridor Restoration — ENV 495</h3>
-          <p>A solo restoration proposal for a critical ecological choke point along Sheridan Creek at Clarkson GO Station. Assessed infrastructure, vegetation, and stream stressors across a 44,900 m² site, proposed a two-phase restoration plan to improve connectivity for terrestrial and aquatic species, and developed a full adaptive management framework with risk assessment. Fieldwork conducted on-site in Mississauga.</p>
-          <div class="card-footer">
-            <span class="tech-badge">GIS</span>
-            <span class="tech-badge">Field Assessment</span>
-            <span class="tech-badge">Ecological Modelling</span>
-            <span class="tech-badge">Urban Planning</span>
-          </div>
-        </div>
+    <!-- ── LEWA PLACEMENT — FEATURED BLOCK ── -->
+    <div class="project-group">
+      <div class="group-header">
+        <div class="group-label">Lewa Wildlife Conservancy — Research Placement</div>
+        <div class="group-date">June – July 2025 · Kenya</div>
       </div>
-    </div>
-
-    <!-- June–July 2025 — Lewa Placement -->
-    <div class="timeline-entry">
-      <div class="timeline-dot dot-blue"></div>
-      <div class="timeline-date">June – July 2025</div>
-      <div style="display:flex;flex-direction:column;gap:0.75rem;flex:1">
-        <div style="font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.25rem">Lewa Wildlife Conservancy — Research Placement</div>
-        <a class="project-card" href="lewa.html" style="margin:0">
+      <div class="group-cards">
+        <a class="project-card" href="lewa.html">
           <div class="card-color-bar bar-blue"></div>
           <div class="card-body">
             <div class="card-type">
               <span class="type-badge badge-blue">Solo</span>
-              <span class="card-tag">Conservation AI · Field Research · Kenya</span>
+              <span class="card-tag">Conservation AI · Computer Vision</span>
             </div>
-            <h3>Wildlife Detection Model — Lewa Elephant Corridor</h3>
-            <p>Built a custom object-detection model to automate camera trap review across a 14 km wildlife corridor. Trained across 5,000+ annotations spanning 13 species classes. A full week's worth of footage — 293 images — assessed in minutes. Final model achieved 99.5% mAP@50, 85.5% precision, and 100% recall.</p>
+            <h3>Wildlife Detection Model</h3>
+            <p>Built a custom object-detection model to automate camera trap review across a 14 km wildlife corridor. 5,000+ annotations, 13 species classes, 293 images processed in minutes. Final model: 99.5% mAP@50, 100% recall.</p>
             <div class="card-footer">
               <span class="tech-badge">Python</span>
               <span class="tech-badge">Roboflow</span>
               <span class="tech-badge">YOLOv8</span>
-              <span class="tech-badge">OpenCV</span>
-              <span class="tech-badge">v6</span>
               <span class="card-arrow">View →</span>
             </div>
           </div>
         </a>
-        <a class="project-card" href="scat.html" style="margin:0">
+        <a class="project-card" href="scat.html">
           <div class="card-color-bar bar-blue"></div>
           <div class="card-body">
             <div class="card-type">
               <span class="type-badge badge-blue">Solo</span>
-              <span class="card-tag">Lab Science · Microscopy · Predator Research</span>
+              <span class="card-tag">Lab Science · Microscopy</span>
             </div>
-            <h3>Predator Scat Analysis — Hair Identification & Decision Tree</h3>
-            <p>Worked in Lewa's research lab under the head of predator research to identify prey species from lion and hyena scat samples. Contributed a species identification decision tree, a photographic hair reference library, and refined microscopy protocols — drawing on earth science training to improve classification accuracy for the conservancy's quarterly predation reports.</p>
+            <h3>Predator Scat Analysis</h3>
+            <p>Identified prey species from lion and hyena scat under the head of predator research. Developed a species identification decision tree, photographic hair reference library, and refined microscopy protocols for quarterly predation reports.</p>
             <div class="card-footer">
               <span class="tech-badge">Microscopy</span>
               <span class="tech-badge">Hair ID</span>
-              <span class="tech-badge">Predator-Prey Analysis</span>
+              <span class="tech-badge">Predator Research</span>
+              <span class="card-arrow">View →</span>
+            </div>
+          </div>
+        </a>
+        <a class="project-card" href="lions.html">
+          <div class="card-color-bar bar-blue"></div>
+          <div class="card-body">
+            <div class="card-type">
+              <span class="type-badge badge-blue">Solo</span>
+              <span class="card-tag">Data Analysis · Population Ecology</span>
+            </div>
+            <h3>Lion Family Tree & Population Records</h3>
+            <p>Assigned to update Lewa's lion population database and generate a multi-generational family tree. Updated Excel records tracking 4 generations of lions across the pride, then used RStudio to produce a visualised lineage from the cleaned data.</p>
+            <div class="card-footer">
+              <span class="tech-badge">R / RStudio</span>
+              <span class="tech-badge">Excel</span>
+              <span class="tech-badge">Population Tracking</span>
               <span class="card-arrow">View →</span>
             </div>
           </div>
@@ -307,58 +294,75 @@ Output
       </div>
     </div>
 
-    <!-- November 2025 — UTM Pond -->
-    <div class="timeline-entry">
-      <div class="timeline-dot dot-green"></div>
-      <div class="timeline-date">November 2025</div>
-      <div class="project-card no-link">
-        <div class="card-color-bar bar-green"></div>
-        <div class="card-body">
-          <div class="card-type">
-            <span class="type-badge badge-green">Group · Academic</span>
-            <span class="card-tag">Field Methods · Water Quality · UTM</span>
+    <!-- ── FSP ── -->
+    <div class="project-group">
+      <div class="group-header">
+        <div class="group-label">Family Services of Peel — ARW Community Leader</div>
+        <div class="group-date">March 2026 · Mississauga</div>
+      </div>
+      <div class="group-cards">
+        <a class="project-card" href="fsp.html">
+          <div class="card-color-bar bar-green"></div>
+          <div class="card-body">
+            <div class="card-type">
+              <span class="type-badge badge-green">Group</span>
+              <span class="card-tag">Community Research · Data · Peel Region</span>
+            </div>
+            <h3>Community Services Gap Analysis</h3>
+            <p>Co-led a five-person team to map and gap-analyse 51 community programs across the Peel District School Board. Identified structural gaps affecting newcomer youth, students with disabilities, and marginalised groups. Findings fed directly into FSP's service planning.</p>
+            <div class="card-footer">
+              <span class="tech-badge">Research</span>
+              <span class="tech-badge">Data Mapping</span>
+              <span class="tech-badge">Gap Analysis</span>
+              <span class="card-arrow">View →</span>
+            </div>
           </div>
-          <h3>Dissolved Oxygen & Rain Event Recovery — UTM Natural Pond</h3>
-          <p>Collaborated with a four-person team to study how dissolved oxygen levels recover in the UTM natural pond following summer rain events. Collected water quality measurements across four sites at multiple depths using probe instruments, analysed stratification patterns, and investigated the relationship between runoff, eutrophication, and aquatic habitat health.</p>
-          <div class="card-footer">
-            <span class="tech-badge">Field Methods</span>
-            <span class="tech-badge">Water Quality Analysis</span>
-            <span class="tech-badge">Physical Geography</span>
-            <span class="tech-badge">Data Collection</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── OTHER PROJECTS ── -->
+    <div class="project-group">
+      <div class="group-header">
+        <div class="group-label">Academic Work</div>
+        <div class="group-date">University of Toronto Mississauga</div>
+      </div>
+      <div class="group-cards">
+        <div class="project-card no-link">
+          <div class="card-color-bar bar-red"></div>
+          <div class="card-body">
+            <div class="card-type">
+              <span class="type-badge badge-red">Solo · Academic</span>
+              <span class="card-tag">Urban Ecology · Restoration · April 2025</span>
+            </div>
+            <h3>Sheridan Creek Ecological Corridor Restoration</h3>
+            <p>Solo restoration proposal for a 44,900 m² site along Sheridan Creek at Clarkson GO Station. Two-phase plan to improve species connectivity, with full adaptive management framework and risk assessment. Fieldwork conducted on-site.</p>
+            <div class="card-footer">
+              <span class="tech-badge">GIS</span>
+              <span class="tech-badge">Field Assessment</span>
+              <span class="tech-badge">Ecological Modelling</span>
+            </div>
+          </div>
+        </div>
+        <div class="project-card no-link">
+          <div class="card-color-bar bar-green"></div>
+          <div class="card-body">
+            <div class="card-type">
+              <span class="type-badge badge-green">Group · Academic</span>
+              <span class="card-tag">Water Quality · Field Methods · Nov 2025</span>
+            </div>
+            <h3>Dissolved Oxygen Recovery — UTM Natural Pond</h3>
+            <p>Studied how dissolved oxygen levels recover in the UTM natural pond following summer rain events. Measurements across four sites at multiple depths, analysing stratification patterns, runoff, and eutrophication impacts on aquatic habitat.</p>
+            <div class="card-footer">
+              <span class="tech-badge">Field Methods</span>
+              <span class="tech-badge">Water Quality</span>
+              <span class="tech-badge">Physical Geography</span>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- March 2026 — FSP -->
-    <div class="timeline-entry">
-      <div class="timeline-dot dot-green"></div>
-      <div class="timeline-date">March 2026</div>
-      <a class="project-card" href="fsp.html">
-        <div class="card-color-bar bar-green"></div>
-        <div class="card-body">
-          <div class="card-type">
-            <span class="type-badge badge-green">Group</span>
-            <span class="card-tag">Community Research · Data · Mississauga</span>
-          </div>
-          <h3>Peel Region Community Services — Gap Analysis</h3>
-          <p>Co-led a five-person team for Family Services of Peel to map and gap-analyse 51 community programs across the Peel District School Board. Identified structural gaps affecting newcomer youth, students with disabilities, and marginalised groups. Findings fed directly into FSP's service planning.</p>
-          <div class="card-footer">
-            <span class="tech-badge">Research</span>
-            <span class="tech-badge">Data Mapping</span>
-            <span class="tech-badge">Gap Analysis</span>
-            <span class="card-arrow">View →</span>
-          </div>
-        </div>
-      </a>
-    </div>
-
-  </div>
-
-  <div class="timeline-legend fade-up">
-    <div class="legend-item"><div class="legend-dot" style="background:#3B6FD4"></div>Solo project</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#2D7A4F"></div>Group project</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>Academic project</div>
   </div>
 </section>
 
