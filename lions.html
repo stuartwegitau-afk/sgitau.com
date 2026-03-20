@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lion Family Tree — Stuart Gitau</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--ink:#0E1812;--forest:#1B4332;--moss:#2D6A4F;--sage:#52B788;--sage-pale:#D8F3DC;--sand:#F8F4EE;--muted:#5C6B5F;--border:#C8DACC;--white:#FFFFFF;--gold:#C8920A;--gold-pale:#FDF5E3}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--ink);font-size:17px;line-height:1.75}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5vw;background:rgba(248,244,238,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    .nav-back{font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--moss);text-decoration:none}
+    .nav-back:hover{color:var(--forest)}
+    .nav-title{font-size:0.82rem;font-weight:500;color:var(--ink);opacity:0.4}
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 5vw 5rem;position:relative;overflow:hidden;background:#0a0804}
+    .hero-bg{position:absolute;inset:0;background-image:url('images/lewa-elephants.jpeg');background-size:cover;background-position:center 55%;filter:brightness(0.22) saturate(0.4) sepia(0.3);z-index:0}
+    .hero-content{position:relative;z-index:1;max-width:760px}
+    .hero-tag{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
+    .hero-tag::before{content:'';width:24px;height:1px;background:var(--gold)}
+    .hero h1{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--white);margin-bottom:1.5rem}
+    .hero h1 em{font-style:italic;color:var(--gold)}
+    .hero-sub{font-size:1.05rem;color:rgba(255,255,255,0.6);max-width:560px;line-height:1.8;margin-bottom:2.5rem}
+    .hero-stats{display:flex;gap:2.5rem;flex-wrap:wrap}
+    .hero-stat .num{font-family:'Fraunces',serif;font-size:2rem;font-weight:300;color:var(--gold);line-height:1}
+    .hero-stat .label{font-size:0.73rem;color:rgba(255,255,255,0.5);margin-top:0.2rem;letter-spacing:0.04em;text-transform:uppercase;max-width:120px;line-height:1.4}
+    .section{padding:5.5rem 5vw}
+    .section-inner{max-width:900px;margin:0 auto}
+    .section-label{font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--moss);margin-bottom:0.6rem}
+    h2{font-family:'Fraunces',serif;font-size:clamp(1.6rem,2.8vw,2.3rem);font-weight:300;line-height:1.15;letter-spacing:-0.015em;color:var(--forest);margin-bottom:1.75rem}
+    p{color:var(--muted);margin-bottom:1.25rem;line-height:1.85;font-size:1rem}
+    .callout{background:var(--gold-pale);border-left:3px solid var(--gold);border-radius:0 0.75rem 0.75rem 0;padding:1.25rem 1.5rem;margin:2rem 0;font-style:italic;color:#7A5000;font-size:0.98rem}
+
+    /* CONTEXT */
+    .context-section{background:var(--white)}
+
+    /* WORK SECTION */
+    .work-section{background:var(--sand)}
+    .work-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+    .work-card{background:var(--white);border:1px solid var(--border);border-radius:1rem;padding:1.5rem}
+    .work-num{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:300;color:var(--gold);line-height:1;margin-bottom:0.75rem}
+    .work-card h3{font-family:'Fraunces',serif;font-size:1rem;font-weight:400;color:var(--forest);margin-bottom:0.4rem}
+    .work-card p{font-size:0.85rem;margin:0;line-height:1.65}
+
+    /* FAMILY TREE */
+    .tree-section{background:var(--white)}
+    .tree-wrap{overflow-x:auto;margin-top:2rem;border-radius:1rem;border:1px solid var(--border);background:#0E1812;padding:2rem}
+    .tree-key{display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+    .key-item{display:flex;align-items:center;gap:0.5rem;font-size:0.78rem;color:rgba(255,255,255,0.55)}
+    .key-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+
+    /* INTERACTIVE TREE */
+    .tree-svg-wrap{width:100%;overflow-x:auto}
+    #familyTree{min-width:860px;display:block}
+    .lion-node{cursor:pointer}
+    .lion-node circle{transition:r 0.2s,filter 0.2s}
+    .lion-node:hover circle{filter:brightness(1.3)}
+    .lion-node text{pointer-events:none;font-family:'DM Sans',sans-serif}
+    .tooltip{position:fixed;background:var(--ink);color:var(--white);padding:0.75rem 1rem;border-radius:0.75rem;font-size:0.82rem;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:200;max-width:200px;line-height:1.6}
+
+    /* SUMMARY */
+    .summary-section{background:var(--forest)}
+    .summary-section h2{color:var(--white)}
+    .summary-section .section-label{color:var(--sage)}
+    .summary-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:0.75rem;margin-top:2rem}
+    .summary-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:0.75rem;padding:1.1rem;text-align:center}
+    .s-name{font-family:'Fraunces',serif;font-size:1rem;font-weight:400;color:var(--white);margin-bottom:0.3rem}
+    .s-cubs{font-size:0.72rem;color:rgba(255,255,255,0.45);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.5rem}
+    .s-bar{height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden;margin-bottom:0.5rem}
+    .s-bar-fill{height:100%;background:var(--sage);border-radius:2px;transition:width 1s ease}
+    .s-stats{display:flex;justify-content:center;gap:0.75rem;font-size:0.72rem}
+    .s-alive{color:#6EE7A0;font-weight:600}
+    .s-dead{color:rgba(255,255,255,0.3)}
+
+    /* R OUTPUT */
+    .rstudio-section{background:var(--sand)}
+    .rstudio-wrap{border-radius:1rem;overflow:hidden;border:1px solid var(--border);margin-top:2rem}
+    .rstudio-header{background:var(--ink);padding:0.75rem 1.25rem;display:flex;align-items:center;gap:0.5rem}
+    .rstudio-dot{width:10px;height:10px;border-radius:50%}
+    .rstudio-title{font-size:0.78rem;color:rgba(255,255,255,0.45);margin-left:0.5rem;font-family:monospace}
+    .rstudio-img{width:100%;display:block}
+
+    /* NEXT */
+    .next-section{background:var(--sand);padding:4rem 5vw;border-top:1px solid var(--border)}
+    .next-inner{max-width:900px;margin:0 auto}
+    .next-label-top{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--moss);margin-bottom:1rem}
+    .next-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.75rem;margin-bottom:2rem}
+    .next-link{display:flex;flex-direction:column;text-decoration:none;background:var(--white);border:1px solid var(--border);border-radius:1rem;padding:1.25rem 1.5rem;transition:border-color 0.2s,transform 0.2s}
+    .next-link:hover{border-color:var(--sage);transform:translateY(-2px)}
+    .next-link-label{font-size:0.68rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--moss);margin-bottom:0.3rem}
+    .next-link-title{font-family:'Fraunces',serif;font-size:0.95rem;font-weight:400;color:var(--forest)}
+    .back-link{font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+    .back-link:hover{color:var(--forest)}
+
+    .fade{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .fade.in{opacity:1;transform:translateY(0)}
+    @media(max-width:640px){.work-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<div class="tooltip" id="tooltip"></div>
+
+<nav>
+  <a class="nav-back" href="index.html">← Back</a>
+  <span class="nav-title">Lion Family Tree</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Population Ecology · Lewa Wildlife Conservancy · June–July 2025</div>
+    <h1>Four generations of<br/>lions, <em>mapped</em></h1>
+    <p class="hero-sub">Assigned to update Lewa's lion population records and produce a multi-generational family tree. Updated the Excel dataset tracking births, deaths, and lineage — then used RStudio to generate a visualised family tree from the cleaned data.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num">4</div><div class="label">Generations tracked</div></div>
+      <div class="hero-stat"><div class="num">4</div><div class="label">Founding females</div></div>
+      <div class="hero-stat"><div class="num">13</div><div class="label">Females with cub records</div></div>
+      <div class="hero-stat"><div class="num">50+</div><div class="label">Individual lions in dataset</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTEXT -->
+<section class="section context-section">
+  <div class="section-inner fade">
+    <p class="section-label">Why this data matters</p>
+    <h2>Lion population records as a conservation tool</h2>
+    <p>Individual lion identification and genealogical tracking is a core part of wildlife management at Lewa. Knowing which females are breeding, which lineages are surviving, and how pride structure changes over time allows the research team to assess population health, detect early signs of genetic stress, and understand how predators interact with prey populations across the landscape.</p>
+    <div class="callout">Population records like this are the foundation of evidence-based conservation — without them, management decisions are made blind.</div>
+    <p>The dataset I was assigned tracks the female lions and cubs they have produced across Lewa, recording births, deaths, paternity, and cub survival across multiple generations. The records needed updating with the most recent data, and the team wanted a visualised family tree to make the generational structure legible at a glance.</p>
+  </div>
+</section>
+
+<!-- THE WORK -->
+<section class="section work-section">
+  <div class="section-inner fade">
+    <p class="section-label">The Work</p>
+    <h2>Two tasks, one dataset</h2>
+    <div class="work-grid">
+      <div class="work-card">
+        <div class="work-num">01</div>
+        <h3>Updating the Excel records</h3>
+        <p>The existing spreadsheet tracked lionesses and their cubs across multiple generations — but needed updating with the most recent births, deaths, cub names, paternity records, and survival statuses. I went through the dataset systematically, cross-referencing field records to fill in missing entries, correct inconsistencies, and add new data for the most recent breeding seasons (2023–2024).</p>
+      </div>
+      <div class="work-card">
+        <div class="work-num">02</div>
+        <h3>Generating the family tree in RStudio</h3>
+        <p>Using the updated Excel dataset as the source, I built a family tree visualisation in RStudio. This involved structuring the parent-offspring relationships as a graph, mapping generational levels, and rendering the lineage in a readable format that the research team could use directly in their reporting. The RStudio output is shown below.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INTERACTIVE TREE -->
+<section class="section tree-section">
+  <div class="section-inner fade">
+    <p class="section-label">Family Tree</p>
+    <h2>Four generations — interactive</h2>
+    <p>Each node represents an individual lion. Hover for details. Colour indicates survival status. Lines show mother-offspring relationships. Key males — Muffasa, Ntulele, Jacob, Dick, Cat-tail — appear as paternity references.</p>
+    <div class="tree-wrap">
+      <div class="tree-key">
+        <div class="key-item"><div class="key-dot" style="background:#6EE7A0"></div>Alive</div>
+        <div class="key-item"><div class="key-dot" style="background:#F87171"></div>Dead</div>
+        <div class="key-item"><div class="key-dot" style="background:#93C5FD"></div>Unknown/unnamed</div>
+        <div class="key-item"><div class="key-dot" style="background:#FCD34D;border:2px solid #F59E0B"></div>Founder female</div>
+      </div>
+      <div class="tree-svg-wrap">
+        <svg id="familyTree" viewBox="0 0 1000 620" xmlns="http://www.w3.org/2000/svg"></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUMMARY STATS -->
+<section class="section summary-section">
+  <div class="section-inner fade">
+    <p class="section-label">Summary Statistics</p>
+    <h2>Cubs per female — survival breakdown</h2>
+    <div class="summary-grid" id="summaryGrid"></div>
+  </div>
+</section>
+
+<!-- R OUTPUT -->
+<section class="section rstudio-section">
+  <div class="section-inner fade">
+    <p class="section-label">RStudio Output</p>
+    <h2>The original family tree visualisation</h2>
+    <p>This is the family tree generated directly from RStudio using the updated dataset — the actual deliverable produced during the placement for the research team.</p>
+    <div class="rstudio-wrap">
+      <div class="rstudio-header">
+        <div class="rstudio-dot" style="background:#FF5F56"></div>
+        <div class="rstudio-dot" style="background:#FFBD2E"></div>
+        <div class="rstudio-dot" style="background:#27C93F"></div>
+        <span class="rstudio-title">lion_family_tree.R — RStudio output</span>
+      </div>
+      <img class="rstudio-img" src="images/lion-family-tree.jpg" alt="RStudio generated lion family tree"/>
+    </div>
+  </div>
+</section>
+
+<div class="next-section">
+  <div class="next-inner">
+    <p class="next-label-top">Also from this placement</p>
+    <div class="next-cards">
+      <a class="next-link" href="lewa.html">
+        <span class="next-link-label">Conservation AI →</span>
+        <span class="next-link-title">Wildlife Detection Model</span>
+      </a>
+      <a class="next-link" href="scat.html">
+        <span class="next-link-label">Lab Science →</span>
+        <span class="next-link-title">Predator Scat Analysis</span>
+      </a>
+    </div>
+    <a class="back-link" href="index.html">← All Projects</a>
+  </div>
+</div>
+
+<script>
+// ── DATA ──
+const lions = [
+  // Gen 1 founders
+  {id:'sarah',name:'Sarah',gen:1,col:0,born:2008,status:'founder',mother:null,sex:'F'},
+  {id:'abigal',name:'Abigal',gen:1,col:1,born:2008,status:'founder',mother:null,sex:'F'},
+  {id:'sussie',name:'Sussie',gen:1,col:2,born:2009,status:'founder',mother:null,sex:'F'},
+  {id:'linda',name:'Linda',gen:1,col:3,born:2009,status:'founder',mother:null,sex:'F'},
+  // Gen 2 - Sarah's
+  {id:'simone',name:'Simone',gen:2,col:0,born:2011,status:'alive',mother:'sarah',sex:'F',father:'Muffasa'},
+  {id:'sue',name:'Sue',gen:2,col:1,born:2011,status:'alive',mother:'sarah',sex:'F',father:'Muffasa'},
+  {id:'nasa',name:'Nasa',gen:2,col:2,born:2016,status:'alive',mother:'sarah',sex:'F',father:'Jacob'},
+  {id:'abijah',name:'Abijah',gen:2,col:3,born:2016,status:'dead',mother:'sarah',sex:'F',father:'Jacob'},
+  {id:'anita',name:'Anita',gen:2,col:4,born:2017,status:'alive',mother:'sarah',sex:'F',father:'Dick'},
+  // Gen 2 - Abigal's
+  {id:'dalma',name:'Dalma',gen:2,col:5,born:2008,status:'alive',mother:'abigal',sex:'F',father:'Muffasa'},
+  {id:'jacob_m',name:'Jacob',gen:2,col:6,born:2011,status:'alive',mother:'abigal',sex:'M',father:'Muffasa'},
+  // Gen 2 - Sussie's
+  {id:'jamila',name:'Jamila',gen:2,col:7,born:2014,status:'unknown',mother:'sussie',sex:'F',father:'Muffasa'},
+  // Gen 2 - Linda's
+  {id:'mole',name:'Mole',gen:2,col:8,born:2014,status:'unknown',mother:'linda',sex:'F',father:'Muffasa'},
+  // Gen 3 - Dalma's
+  {id:'doris',name:'Doris',gen:3,col:4,born:2011,status:'alive',mother:'dalma',sex:'F',father:'Ntulele'},
+  {id:'zira',name:'Zira',gen:3,col:5,born:2020,status:'alive',mother:'dalma',sex:'F',father:'Ntulele'},
+  {id:'safia',name:'Safia',gen:3,col:6,born:2020,status:'alive',mother:'dalma',sex:'F',father:'Ntulele'},
+  {id:'miles',name:'Miles',gen:3,col:7,born:2020,status:'unknown',mother:'dalma',sex:'M',father:'Ntulele'},
+  // Gen 3 - Simone's
+  {id:'maria',name:'Maria',gen:3,col:1,born:2020,status:'alive',mother:'simone',sex:'F',father:"Cat-tail's"},
+  // Gen 3 - Nasa's
+  {id:'leah',name:'Leah',gen:3,col:2,born:2020,status:'alive',mother:'nasa',sex:'F',father:'Ntulele'},
+  // Gen 4 - Safia's
+  {id:'mark',name:'Mark',gen:4,col:5,born:2023,status:'alive',mother:'safia',sex:'M',father:"Cat-tail's"},
+  {id:'maya',name:'Maya',gen:4,col:6,born:2024,status:'alive',mother:'safia',sex:'F',father:"Cat-tail's"},
+  // Gen 4 - Leah's
+  {id:'cub10',name:'Cub 10',gen:4,col:2,born:2024,status:'alive',mother:'leah',sex:'M',father:"Cat-tail's"},
+  {id:'cub11',name:'Cub 11',gen:4,col:3,born:2024,status:'alive',mother:'leah',sex:'M',father:"Cat-tail's"},
+];
+
+const statusColor = {alive:'#6EE7A0',dead:'#F87171',unknown:'#93C5FD',founder:'#FCD34D'};
+const genY = {1:80,2:220,3:380,4:510};
+const totalCols = 10;
+const svgW = 1000;
+const colW = svgW / totalCols;
+
+// assign x positions
+const colUsage = {};
+lions.forEach(l => {
+  const x = l.col * colW + colW/2;
+  l.x = x;
+  l.y = genY[l.gen];
+});
+
+const svg = document.getElementById('familyTree');
+
+// draw lines first
+lions.forEach(l => {
+  if(!l.mother) return;
+  const mom = lions.find(m=>m.id===l.mother);
+  if(!mom) return;
+  const line = document.createElementNS('http://www.w3.org/2000/svg','path');
+  const mx = mom.x, my = mom.y;
+  const cx = l.x, cy = l.y;
+  const mid = (my+cy)/2;
+  line.setAttribute('d',`M${mx},${my+14} C${mx},${mid} ${cx},${mid} ${cx},${cy-14}`);
+  line.setAttribute('stroke','rgba(255,255,255,0.15)');
+  line.setAttribute('stroke-width','1.5');
+  line.setAttribute('fill','none');
+  svg.appendChild(line);
+});
+
+// gen labels
+Object.entries(genY).forEach(([gen,y])=>{
+  const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x','8');t.setAttribute('y',y+4);
+  t.setAttribute('fill','rgba(255,255,255,0.25)');t.setAttribute('font-size','10');
+  t.setAttribute('font-family','DM Sans,sans-serif');t.setAttribute('font-weight','600');
+  t.textContent=`GEN ${gen}`;svg.appendChild(t);
+});
+
+// draw nodes
+const tip = document.getElementById('tooltip');
+lions.forEach(l => {
+  const g = document.createElementNS('http://www.w3.org/2000/svg','g');
+  g.setAttribute('class','lion-node');
+  g.setAttribute('transform',`translate(${l.x},${l.y})`);
+
+  const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  const r = l.gen===1?16:l.sex==='F'?13:11;
+  circle.setAttribute('r',r);
+  circle.setAttribute('fill',statusColor[l.status]);
+  circle.setAttribute('opacity','0.9');
+  if(l.status==='founder'){circle.setAttribute('stroke','#F59E0B');circle.setAttribute('stroke-width','2');}
+  g.appendChild(circle);
+
+  // sex indicator
+  const sexTxt = document.createElementNS('http://www.w3.org/2000/svg','text');
+  sexTxt.setAttribute('text-anchor','middle');sexTxt.setAttribute('y','4');
+  sexTxt.setAttribute('font-size','9');sexTxt.setAttribute('fill','rgba(0,0,0,0.6)');
+  sexTxt.setAttribute('font-family','DM Sans,sans-serif');sexTxt.setAttribute('font-weight','600');
+  sexTxt.textContent=l.sex;g.appendChild(sexTxt);
+
+  const label = document.createElementNS('http://www.w3.org/2000/svg','text');
+  label.setAttribute('text-anchor','middle');label.setAttribute('y',r+13);
+  label.setAttribute('font-size','9.5');label.setAttribute('fill','rgba(255,255,255,0.75)');
+  label.setAttribute('font-family','DM Sans,sans-serif');label.textContent=l.name;
+  g.appendChild(label);
+
+  g.addEventListener('mouseenter', (e)=>{
+    tip.style.opacity='1';
+    const lines=[`<strong>${l.name}</strong>`,`Born: ${l.born}`,`Status: ${l.status}`,l.father?`Father: ${l.father}`:''];
+    tip.innerHTML=lines.filter(Boolean).join('<br/>');
+  });
+  g.addEventListener('mousemove',(e)=>{
+    tip.style.left=(e.clientX+14)+'px';tip.style.top=(e.clientY-10)+'px';
+  });
+  g.addEventListener('mouseleave',()=>{tip.style.opacity='0';});
+  svg.appendChild(g);
+});
+
+// ── SUMMARY STATS ──
+const summaryData=[
+  {name:'Sarah',cubs:9,dead:1,alive:8},
+  {name:'Abigal',cubs:8,dead:8,alive:0},
+  {name:'Sussie',cubs:4,dead:4,alive:0},
+  {name:'Linda',cubs:3,dead:3,alive:0},
+  {name:'Dalma',cubs:9,dead:4,alive:5},
+  {name:'Nasa',cubs:5,dead:0,alive:5},
+  {name:'Doris',cubs:6,dead:2,alive:4},
+  {name:'Leah',cubs:2,dead:0,alive:2},
+  {name:'Maria',cubs:2,dead:1,alive:1},
+  {name:'Safia',cubs:2,dead:0,alive:2},
+  {name:'Sue',cubs:4,dead:2,alive:2},
+  {name:'Anita',cubs:3,dead:0,alive:3},
+  {name:'Zira',cubs:2,dead:0,alive:2},
+];
+const maxCubs=9;
+const grid=document.getElementById('summaryGrid');
+summaryData.forEach(s=>{
+  grid.innerHTML+=`
+    <div class="summary-card">
+      <div class="s-name">${s.name}</div>
+      <div class="s-cubs">${s.cubs} cub${s.cubs!==1?'s':''}</div>
+      <div class="s-bar"><div class="s-bar-fill" data-width="${(s.cubs/maxCubs*100).toFixed(0)}%" style="width:0"></div></div>
+      <div class="s-stats"><span class="s-alive">↑${s.alive} alive</span><span class="s-dead">↓${s.dead} dead</span></div>
+    </div>`;
+});
+
+// animate summary bars on scroll
+const barObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){
+    document.querySelectorAll('.s-bar-fill').forEach(b=>{b.style.width=b.dataset.width});
+    barObs.disconnect();
+  }});
+},{threshold:0.3});
+barObs.observe(grid);
+
+// fade
+const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*100)});},{threshold:0.08});
+document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
