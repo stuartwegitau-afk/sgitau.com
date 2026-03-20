@@ -1,574 +1,534 @@
+Output
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Stuart Gitau — Environmental Science & AI</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <title>Stuart Gitau</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --cream: #F5F2EC;
-      --ink: #1A1A18;
-      --forest: #1C4A2E;
-      --sage: #4A7C59;
-      --sage-light: #D4E8DA;
-      --muted: #6B6B62;
-      --border: #D8D4CB;
-      --white: #FFFFFF;
+      --cream: #F4F1EA; --ink: #141210; --forest: #1C3D2E; --sage: #3A6B4E;
+      --sage-mid: #5A8C6A; --sage-light: #C8DFCE; --sand: #EBE7DC;
+      --muted: #6B6560; --border: #D5D0C5; --white: #FEFEFE;
+      --blue: #1B3A6B; --red: #6B1B1B; --green: #1B4A2E;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
-      color: var(--ink);
-      font-size: 16px;
-      line-height: 1.7;
-    }
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
 
     /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 4vw;
-      background: rgba(245, 242, 236, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.15rem;
-      color: var(--forest);
-      text-decoration: none;
-      letter-spacing: -0.01em;
-    }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a {
-      font-size: 0.875rem;
-      font-weight: 500;
-      color: var(--muted);
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 5vw; background: rgba(244,241,234,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: 'Fraunces', serif; font-size: 1.05rem; color: var(--forest); text-decoration: none; font-weight: 400; }
+    .nav-links { display: flex; gap: 2.2rem; list-style: none; align-items: center; }
+    .nav-links a { font-size: 0.8rem; font-weight: 500; color: var(--muted); text-decoration: none; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
     .nav-links a:hover { color: var(--forest); }
+    .nav-cta { background: var(--forest) !important; color: var(--white) !important; padding: 0.45rem 1.1rem; border-radius: 2rem; transition: background 0.2s !important; }
+    .nav-cta:hover { background: var(--sage) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--ink); }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--cream); z-index: 99; flex-direction: column; align-items: center; justify-content: center; gap: 2.5rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { font-family: 'Fraunces', serif; font-size: 2rem; color: var(--ink); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+    .mobile-menu a:hover { color: var(--sage); }
+    .mobile-close { position: absolute; top: 1.5rem; right: 5vw; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--muted); }
 
     /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 8rem 4vw 5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg-shape {
-      position: absolute;
-      top: -10%;
-      right: -5%;
-      width: 55vw;
-      height: 75vh;
-      background: var(--sage-light);
-      border-radius: 0 0 0 60% / 0 0 0 40%;
-      opacity: 0.5;
-      z-index: 0;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
-    }
-    .hero-eyebrow {
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 1.2rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 28px;
-      height: 1.5px;
-      background: var(--sage);
-    }
-    h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
-      color: var(--ink);
-      margin-bottom: 1.5rem;
-    }
-    h1 em {
-      font-style: italic;
-      color: var(--forest);
-    }
-    .hero-bio {
-      font-size: 1.05rem;
-      color: var(--muted);
-      max-width: 520px;
-      margin-bottom: 2.5rem;
-      line-height: 1.8;
-    }
-    .hero-cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-    .btn-primary {
-      background: var(--forest);
-      color: var(--white);
-      padding: 0.8rem 1.8rem;
-      border-radius: 3rem;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: background 0.2s, transform 0.15s;
-      letter-spacing: 0.01em;
-    }
+    #hero { min-height: 100vh; display: flex; align-items: center; padding: 9rem 5vw 6rem; position: relative; overflow: hidden; }
+    .hero-panel { position: absolute; top: 0; right: 0; bottom: 0; width: 40%; background: var(--sand); clip-path: polygon(14% 0%,100% 0%,100% 100%,0% 100%); z-index: 0; }
+    .hero-content { position: relative; z-index: 1; max-width: 620px; }
+    .hero-eyebrow { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage-mid); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.7rem; }
+    .hero-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--sage-mid); }
+    h1 { font-family: 'Fraunces', serif; font-size: clamp(2.8rem,5.5vw,5rem); line-height: 1.06; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 1.6rem; font-weight: 300; }
+    h1 em { font-style: italic; color: var(--forest); }
+    .hero-bio { font-size: 1.05rem; color: var(--muted); max-width: 500px; margin-bottom: 3rem; line-height: 1.85; }
+    .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3.5rem; }
+    .btn-primary { background: var(--forest); color: var(--white); padding: 0.82rem 1.9rem; border-radius: 3rem; text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: background 0.2s, transform 0.15s; }
     .btn-primary:hover { background: var(--sage); transform: translateY(-2px); }
-    .btn-outline {
-      background: transparent;
-      color: var(--forest);
-      padding: 0.8rem 1.8rem;
-      border-radius: 3rem;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      border: 1.5px solid var(--forest);
-      transition: background 0.2s, color 0.2s, transform 0.15s;
-    }
+    .btn-outline { background: transparent; color: var(--forest); padding: 0.82rem 1.9rem; border-radius: 3rem; text-decoration: none; font-size: 0.875rem; font-weight: 500; border: 1.5px solid var(--forest); transition: all 0.2s; }
     .btn-outline:hover { background: var(--forest); color: var(--white); transform: translateY(-2px); }
+    .hero-pills { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .pill { display: inline-flex; align-items: center; gap: 0.45rem; background: var(--white); border: 1px solid var(--border); border-radius: 2rem; padding: 0.4rem 1rem; font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+    .pill-dot { width: 7px; height: 7px; border-radius: 50%; background: #6EE7A0; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.35} }
 
-    /* ── SECTION BASE ── */
-    section { padding: 6rem 4vw; }
-    .section-label {
-      font-size: 0.75rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 0.75rem;
-    }
-    h2 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      line-height: 1.15;
-      letter-spacing: -0.015em;
-      margin-bottom: 3rem;
-      color: var(--ink);
-    }
+    /* ── SECTIONS ── */
+    section { padding: 6rem 5vw; }
+    .section-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sage-mid); margin-bottom: 0.6rem; }
+    h2 { font-family: 'Fraunces', serif; font-size: clamp(1.9rem,3.5vw,2.9rem); line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); font-weight: 300; }
 
     /* ── ABOUT ── */
     #about { background: var(--white); }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 5rem;
-      align-items: start;
-    }
-    .about-text p { color: var(--muted); margin-bottom: 1.2rem; }
-    .skills-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      margin-top: 1.5rem;
-    }
-    .skill-tag {
-      background: var(--sage-light);
-      color: var(--forest);
-      padding: 0.35rem 0.9rem;
-      border-radius: 2rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.02em;
-    }
-    .about-stats {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
-    .stat-card {
-      background: var(--cream);
-      border: 1px solid var(--border);
-      border-radius: 1rem;
-      padding: 1.5rem 1.75rem;
-    }
-    .stat-card .stat-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.5rem;
-      color: var(--forest);
-      line-height: 1;
-      margin-bottom: 0.25rem;
-    }
-    .stat-card .stat-label {
-      font-size: 0.85rem;
-      color: var(--muted);
-    }
+    .about-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 6rem; align-items: start; margin-top: 3rem; }
+    .about-body p { color: var(--muted); margin-bottom: 1.4rem; font-size: 1rem; line-height: 1.9; }
+    .about-body p strong { color: var(--ink); font-weight: 600; }
+    .about-body p em { font-style: italic; color: var(--forest); }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 2rem; }
+    .tag { background: var(--sand); color: var(--forest); padding: 0.3rem 0.85rem; border-radius: 2rem; font-size: 0.78rem; font-weight: 500; border: 1px solid var(--border); }
+    .about-aside { display: flex; flex-direction: column; }
+    .aside-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+    .aside-item:first-child { padding-top: 0; }
+    .aside-item:last-child { border-bottom: none; }
+    .aside-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage-mid); margin-bottom: 0.4rem; }
+    .aside-item p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin: 0; }
 
-    /* ── PROJECTS ── */
+    /* ── PROJECTS TIMELINE ── */
     #projects { background: var(--cream); }
-    .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-    .project-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 1.25rem;
-      overflow: hidden;
-      transition: transform 0.25s, box-shadow 0.25s;
-      display: flex;
-      flex-direction: column;
-    }
-    .project-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 16px 40px rgba(28, 74, 46, 0.1);
-    }
-    .project-thumb {
-      height: 180px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      background: var(--sage-light);
-      position: relative;
-      overflow: hidden;
-    }
-    .project-thumb.dark { background: var(--forest); }
-    .project-thumb.mid { background: #C8DDD1; }
-    .project-body { padding: 1.5rem; flex: 1; display: flex; flex-direction: column; }
-    .project-tag {
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--sage);
-      margin-bottom: 0.6rem;
-    }
-    .project-card h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.25rem;
-      line-height: 1.25;
-      color: var(--ink);
-      margin-bottom: 0.75rem;
-    }
-    .project-card p {
-      font-size: 0.9rem;
-      color: var(--muted);
-      line-height: 1.7;
-      flex: 1;
-      margin-bottom: 1.25rem;
-    }
-    .project-footer {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-    }
-    .tech-badge {
-      background: var(--cream);
-      color: var(--muted);
-      padding: 0.25rem 0.65rem;
-      border-radius: 0.4rem;
-      font-size: 0.75rem;
-      font-family: monospace;
-      border: 1px solid var(--border);
-    }
+    .timeline { margin-top: 3rem; position: relative; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1.5px; background: var(--border); }
+    .timeline-entry { position: relative; margin-bottom: 2.5rem; padding-left: 2rem; }
+    .timeline-entry:last-child { margin-bottom: 0; }
+    .timeline-dot { position: absolute; left: -2.4rem; top: 1.2rem; width: 13px; height: 13px; border-radius: 50%; border: 2px solid var(--white); box-shadow: 0 0 0 1.5px currentColor; }
+    .dot-blue { color: #3B6FD4; background: #3B6FD4; }
+    .dot-green { color: #2D7A4F; background: #2D7A4F; }
+    .dot-red { color: #C0392B; background: #C0392B; }
+    .timeline-date { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 0.6rem; }
+    .project-card { background: var(--white); border: 1px solid var(--border); border-radius: 1.25rem; overflow: hidden; transition: transform 0.25s, box-shadow 0.25s; display: flex; text-decoration: none; color: inherit; }
+    .project-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(28,61,46,0.1); }
+    .project-card.no-link { cursor: default; }
+    .project-card.no-link:hover { transform: none; box-shadow: none; }
+    .card-color-bar { width: 6px; flex-shrink: 0; }
+    .bar-blue { background: #3B6FD4; }
+    .bar-green { background: #2D7A4F; }
+    .bar-red { background: #C0392B; }
+    .card-body { padding: 1.5rem; flex: 1; }
+    .card-type { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem; }
+    .type-badge { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.18rem 0.55rem; border-radius: 0.3rem; }
+    .badge-blue { background: #EBF0FB; color: #3B6FD4; }
+    .badge-green { background: #E8F5EE; color: #2D7A4F; }
+    .badge-red { background: #FBEAEA; color: #C0392B; }
+    .card-tag { font-size: 0.7rem; color: var(--muted); }
+    .project-card h3 { font-family: 'Fraunces', serif; font-size: 1.1rem; line-height: 1.3; color: var(--ink); margin-bottom: 0.6rem; font-weight: 400; }
+    .project-card p { font-size: 0.875rem; color: var(--muted); line-height: 1.75; margin-bottom: 1rem; }
+    .card-footer { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
+    .tech-badge { background: var(--cream); color: var(--muted); padding: 0.2rem 0.6rem; border-radius: 0.4rem; font-size: 0.7rem; font-family: monospace; border: 1px solid var(--border); }
+    .card-arrow { margin-left: auto; font-size: 0.75rem; font-weight: 600; color: var(--sage-mid); letter-spacing: 0.04em; text-transform: uppercase; }
+    .project-card:hover .card-arrow { color: var(--forest); }
+    .timeline-legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; color: var(--muted); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
 
-    /* ── EXPERIENCE ── */
-    #experience { background: var(--white); }
-    .timeline { display: flex; flex-direction: column; gap: 0; max-width: 760px; }
-    .timeline-item {
-      display: grid;
-      grid-template-columns: 140px 1fr;
-      gap: 2rem;
-      padding: 2rem 0;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-    .timeline-item:last-child { border-bottom: none; }
-    .timeline-date { font-size: 0.82rem; color: var(--muted); padding-top: 0.15rem; line-height: 1.5; }
-    .timeline-content h3 {
-      font-family: 'DM Serif Display', serif;
-      font-size: 1.1rem;
-      color: var(--ink);
-      margin-bottom: 0.2rem;
-    }
-    .timeline-org {
-      font-size: 0.85rem;
-      color: var(--sage);
-      font-weight: 500;
-      margin-bottom: 0.6rem;
-    }
-    .timeline-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    /* ── COLLABORATORS ── */
+    #collaborators { background: var(--sand); }
+    .collab-sub { font-size: 0.95rem; color: var(--muted); max-width: 480px; margin-top: 0.5rem; margin-bottom: 3rem; line-height: 1.8; }
+    .bubble-universe { position: relative; width: 100%; height: 520px; }
+    .bubble-universe svg { width: 100%; height: 100%; }
+    .org-bubble { cursor: pointer; transition: transform 0.2s; transform-origin: center; }
+    .org-bubble:hover { transform: scale(1.08); }
+    .org-bubble circle { transition: filter 0.2s; }
+    .org-bubble:hover circle { filter: brightness(0.92); }
+    .bubble-tooltip { position: absolute; background: var(--ink); color: var(--white); font-size: 0.78rem; padding: 0.5rem 0.9rem; border-radius: 0.5rem; pointer-events: none; opacity: 0; transition: opacity 0.2s; white-space: nowrap; z-index: 10; transform: translate(-50%, -100%); margin-top: -8px; }
+    .collab-note { margin-top: 1.5rem; font-size: 0.83rem; color: var(--muted); font-style: italic; }
 
     /* ── CONTACT ── */
-    #contact {
-      background: var(--forest);
-      color: var(--white);
-      text-align: center;
-      padding: 6rem 4vw;
-    }
+    #contact { background: var(--forest); text-align: center; padding: 7rem 5vw; }
     #contact .section-label { color: var(--sage-light); }
-    #contact h2 { color: var(--white); margin-bottom: 1rem; }
-    #contact p { color: rgba(255,255,255,0.65); max-width: 460px; margin: 0 auto 2.5rem; }
-    #contact .btn-primary { background: var(--white); color: var(--forest); }
-    #contact .btn-primary:hover { background: var(--sage-light); }
-    #contact .btn-outline { border-color: rgba(255,255,255,0.5); color: var(--white); }
-    #contact .btn-outline:hover { background: rgba(255,255,255,0.15); }
+    #contact h2 { color: var(--white); margin: 0.5rem 0 1rem; }
+    .contact-sub { color: rgba(255,255,255,0.6); max-width: 480px; margin: 0 auto 3rem; font-size: 1rem; line-height: 1.8; }
+    .contact-links { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.5rem; }
+    .contact-link { display: flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9); padding: 0.8rem 1.6rem; border-radius: 3rem; text-decoration: none; font-size: 0.875rem; font-weight: 500; border: 1px solid rgba(255,255,255,0.15); transition: all 0.2s; }
+    .contact-link:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
+    .contact-link.primary { background: var(--white); color: var(--forest); border-color: var(--white); }
+    .contact-link.primary:hover { background: var(--sage-light); }
+    .avail-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); padding: 0.5rem 1.1rem; border-radius: 2rem; font-size: 0.78rem; color: rgba(255,255,255,0.65); }
+    .avail-dot { width: 7px; height: 7px; border-radius: 50%; background: #6EE7A0; animation: pulse 2s infinite; }
 
     /* ── FOOTER ── */
-    footer {
-      background: var(--ink);
-      color: rgba(255,255,255,0.4);
-      text-align: center;
-      padding: 2rem 4vw;
-      font-size: 0.82rem;
-    }
+    footer { background: var(--ink); color: rgba(255,255,255,0.3); text-align: center; padding: 1.6rem 5vw; font-size: 0.78rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    footer a { color: rgba(255,255,255,0.35); text-decoration: none; }
+    footer a:hover { color: rgba(255,255,255,0.6); }
 
     /* ── ANIMATIONS ── */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
+    .fade-up { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .nav-links { display: none; }
-      .hero-bg-shape { display: none; }
-      .timeline-item { grid-template-columns: 1fr; gap: 0.5rem; }
-      .timeline-date { padding-top: 0; }
-    }
+    @media(max-width:860px) { .hero-panel{display:none} .about-grid{grid-template-columns:1fr;gap:3rem} .bubble-universe{height:420px} }
+    @media(max-width:640px) { .nav-links{display:none} .hamburger{display:flex} section{padding:4.5rem 5vw} .project-card{flex-direction:column} .card-color-bar{width:100%;height:5px} .bubble-universe{height:360px} }
   </style>
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="#hero">Stuart Gitau</a>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#experience">Experience</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">Stuart Gitau</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#collaborators">Collaborators</a></li>
+    <li><a href="#contact" class="nav-cta">Contact</a></li>
+  </ul>
+  <button class="hamburger" onclick="document.getElementById('mob').classList.toggle('open')" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
 
-  <!-- HERO -->
-  <section id="hero">
-    <div class="hero-bg-shape"></div>
-    <div class="hero-content fade-up">
-      <div class="hero-eyebrow">Environmental Science &amp; AI</div>
-      <h1>Building tech<br/>at the <em>edge</em> of<br/>nature &amp; data.</h1>
-      <p class="hero-bio">
-        Final-year Environmental Science student at University of Toronto Mississauga.
-        I build AI models, analyse ecological corridors, and bridge conservation science
-        with business strategy.
-      </p>
-      <div class="hero-cta">
-        <a class="btn-primary" href="#projects">View my work</a>
-        <a class="btn-outline" href="#contact">Get in touch</a>
+<div class="mobile-menu" id="mob">
+  <button class="mobile-close" onclick="document.getElementById('mob').classList.remove('open')">✕</button>
+  <a href="#about" onclick="document.getElementById('mob').classList.remove('open')">About</a>
+  <a href="#projects" onclick="document.getElementById('mob').classList.remove('open')">Projects</a>
+  <a href="#collaborators" onclick="document.getElementById('mob').classList.remove('open')">Collaborators</a>
+  <a href="#contact" onclick="document.getElementById('mob').classList.remove('open')">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-panel"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow fade-up">Mississauga, ON · Open to what's next</div>
+    <h1 class="fade-up">Problems worth<br/>solving are rarely<br/><em>simple</em> ones.</h1>
+    <p class="hero-bio fade-up">I spent my early years in Nairobi and moved to Toronto for university. That shift — between two very different cities, systems, and ways of seeing — gave me a useful habit: looking for what connects things that seem unrelated. I'm drawn to problems that sit at the edges of disciplines, where the interesting work actually happens.</p>
+    <div class="hero-cta fade-up">
+      <a class="btn-primary" href="#projects">See my work</a>
+      <a class="btn-outline" href="#contact">Get in touch</a>
+    </div>
+    <div class="hero-pills fade-up">
+      <span class="pill"><span class="pill-dot"></span>Open to work</span>
+      <a class="pill" href="#projects" style="text-decoration:none;cursor:pointer;">View projects ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <p class="section-label fade-up">About</p>
+  <h2 class="fade-up">I just really like<br/>solving real problems.</h2>
+  <div class="about-grid">
+    <div class="about-body fade-up">
+      <p>I grew up in Nairobi, went to school in Kenya, and eventually landed at the University of Toronto to study Environmental Science. That path sounds linear on paper. It wasn't. Along the way I picked up a deep interest in how systems work: ecosystems, supply chains, communities, markets. The specific domain matters less to me than the quality of the question.</p>
+      <p>My scientific training gave me a framework for dealing with complexity and uncertainty — how to gather evidence, hold a hypothesis lightly, and know when the data is telling you something unexpected. Sport and volunteering added something the classroom couldn't: the ability to read a situation from the inside, to work within broken systems and care about fixing them. That combination turns out to be more useful than any single discipline alone.</p>
+      <p>I'm graduating with a BSc in June 2026, but I don't think of that as a destination. The degree is one layer of how I think, not a ceiling. The problems I find most compelling sit at the intersection of data, strategy, and real-world impact: climate solutions, financial systems, operational efficiency, public sector gaps. If there's structure to a problem and stakes attached to getting it right, I want to be in the room.</p>
+      <p>I'm not trying to label what I do too precisely. The honest answer is that I'm someone who figures things out, builds things that work, and cares about the outcome.</p>
+      <div class="tag-row">
+        <span class="tag">Climate & ESG</span>
+        <span class="tag">Data Analysis</span>
+        <span class="tag">Business Intelligence</span>
+        <span class="tag">Python · R · SQL</span>
+        <span class="tag">ArcGIS</span>
+        <span class="tag">Computer Vision</span>
+        <span class="tag">Conservation Tech</span>
+        <span class="tag">Systems Thinking</span>
       </div>
     </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about">
-    <div class="about-grid">
-      <div class="about-text fade-up">
-        <p class="section-label">About</p>
-        <h2>Science, strategy,<br/>and a bit of code.</h2>
-        <p>
-          I'm a 24-year-old based in Mississauga, combining environmental science fieldwork
-          with practical AI development. From training object-detection models on elephant
-          camera-trap data in Kenya, to mapping community service gaps in Peel Region —
-          I like problems that sit at the intersection of data and real-world impact.
-        </p>
-        <p>
-          My longer-term focus is on ESG intelligence, agentic AI workflows, and
-          conservation technology. I'm currently graduating in June 2026 and open
-          to roles in strategy, sustainability consulting, and tech.
-        </p>
-        <div class="skills-grid">
-          <span class="skill-tag">Python</span>
-          <span class="skill-tag">R</span>
-          <span class="skill-tag">SQL</span>
-          <span class="skill-tag">ArcGIS</span>
-          <span class="skill-tag">Roboflow</span>
-          <span class="skill-tag">Computer Vision</span>
-          <span class="skill-tag">RAG Pipelines</span>
-          <span class="skill-tag">Data Analysis</span>
-          <span class="skill-tag">Notion</span>
-        </div>
+    <div class="about-aside fade-up">
+      <div class="aside-item">
+        <div class="aside-label">Currently</div>
+        <p>Final-year BSc Environmental Science, Minor in Economics — University of Toronto Mississauga. Graduating June 2026.</p>
       </div>
-      <div class="about-stats fade-up">
-        <div class="stat-card">
-          <div class="stat-num">~5,000</div>
-          <div class="stat-label">Images manually annotated for elephant detection model</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">91%</div>
-          <div class="stat-label">Model accuracy on elephant detection across 3 camera trap sites</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-num">14 km</div>
-          <div class="stat-label">Mount Kenya Elephant Corridor studied for wildlife movement</div>
-        </div>
+      <div class="aside-item">
+        <div class="aside-label">Background</div>
+        <p>Born and raised in Nairobi, Kenya. Studied at the University of Toronto Mississauga.</p>
+      </div>
+      <div class="aside-item">
+        <div class="aside-label">Interests</div>
+        <p>Sport, music, art, dance, history, geopolitics, trading.</p>
+      </div>
+      <div class="aside-item">
+        <div class="aside-label">Open to</div>
+        <p>Climate technology, ESG consulting, financial analysis, data & strategy roles, and conversations I haven't imagined yet.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- PROJECTS -->
-  <section id="projects">
-    <p class="section-label fade-up">Projects</p>
-    <h2 class="fade-up">Selected work</h2>
-    <div class="projects-grid">
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label fade-up">Projects</p>
+  <h2 class="fade-up">Selected work</h2>
 
-      <a class="project-card fade-up" href="lewa.html" style="text-decoration:none;">
-        <div class="project-thumb dark">🐘</div>
-        <div class="project-body">
-          <p class="project-tag">Conservation AI · Field Research</p>
-          <h3>Mount Kenya Elephant Corridor — Wildlife Detection Model</h3>
-          <p>
-            Trained a custom YOLOv8 object-detection model on ~5,000 annotated camera-trap images
-            across three sites in the 14 km Lewa–Ngare Ndare corridor. Built Python post-processing
-            scripts for batch inference, centroid-based movement classification, and CSV export.
-            Achieved ~91% accuracy for elephants.
-          </p>
-          <div class="project-footer">
-            <span class="tech-badge">Python</span>
-            <span class="tech-badge">Roboflow</span>
-            <span class="tech-badge">YOLOv8</span>
-            <span class="tech-badge">OpenCV</span>
+  <div class="timeline fade-up">
+
+    <!-- April 2025 — Sheridan Creek -->
+    <div class="timeline-entry">
+      <div class="timeline-dot dot-red"></div>
+      <div class="timeline-date">April 2025</div>
+      <div class="project-card no-link">
+        <div class="card-color-bar bar-red"></div>
+        <div class="card-body">
+          <div class="card-type">
+            <span class="type-badge badge-red">Academic · Solo</span>
+            <span class="card-tag">Urban Ecology · Restoration Planning · Mississauga</span>
+          </div>
+          <h3>Sheridan Creek Ecological Corridor Restoration — ENV 495</h3>
+          <p>A solo restoration proposal for a critical ecological choke point along Sheridan Creek at Clarkson GO Station. Assessed infrastructure, vegetation, and stream stressors across a 44,900 m² site, proposed a two-phase restoration plan to improve connectivity for terrestrial and aquatic species, and developed a full adaptive management framework with risk assessment. Fieldwork conducted on-site in Mississauga.</p>
+          <div class="card-footer">
+            <span class="tech-badge">GIS</span>
+            <span class="tech-badge">Field Assessment</span>
+            <span class="tech-badge">Ecological Modelling</span>
+            <span class="tech-badge">Urban Planning</span>
           </div>
         </div>
-      </a>
+      </div>
+    </div>
 
-      <a class="project-card fade-up" href="fsp.html" style="text-decoration:none;">
-        <div class="project-thumb mid">🗺️</div>
-        <div class="project-body">
-          <p class="project-tag">Community Research · Data Analysis</p>
-          <h3>Peel Region Community Services Gap Analysis</h3>
-          <p>
-            Co-led a five-person team for Family Services of Peel, mapping 31 PDSB community programs
-            across four service areas. Identified structural gaps in support for marginalized youth,
-            newcomers, and students with disabilities. Findings used in FSP's planning process.
-          </p>
-          <div class="project-footer">
-            <span class="tech-badge">Notion</span>
+    <!-- June–July 2025 — Lewa Placement -->
+    <div class="timeline-entry">
+      <div class="timeline-dot dot-blue"></div>
+      <div class="timeline-date">June – July 2025</div>
+      <div style="display:flex;flex-direction:column;gap:0.75rem;flex:1">
+        <div style="font-size:0.72rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:0.25rem">Lewa Wildlife Conservancy — Research Placement</div>
+        <a class="project-card" href="lewa.html" style="margin:0">
+          <div class="card-color-bar bar-blue"></div>
+          <div class="card-body">
+            <div class="card-type">
+              <span class="type-badge badge-blue">Solo</span>
+              <span class="card-tag">Conservation AI · Field Research · Kenya</span>
+            </div>
+            <h3>Wildlife Detection Model — Lewa Elephant Corridor</h3>
+            <p>Built a custom object-detection model to automate camera trap review across a 14 km wildlife corridor. Trained across 5,000+ annotations spanning 13 species classes. A full week's worth of footage — 293 images — assessed in minutes. Final model achieved 99.5% mAP@50, 85.5% precision, and 100% recall.</p>
+            <div class="card-footer">
+              <span class="tech-badge">Python</span>
+              <span class="tech-badge">Roboflow</span>
+              <span class="tech-badge">YOLOv8</span>
+              <span class="tech-badge">OpenCV</span>
+              <span class="tech-badge">v6</span>
+              <span class="card-arrow">View →</span>
+            </div>
+          </div>
+        </a>
+        <a class="project-card" href="scat.html" style="margin:0">
+          <div class="card-color-bar bar-blue"></div>
+          <div class="card-body">
+            <div class="card-type">
+              <span class="type-badge badge-blue">Solo</span>
+              <span class="card-tag">Lab Science · Microscopy · Predator Research</span>
+            </div>
+            <h3>Predator Scat Analysis — Hair Identification & Decision Tree</h3>
+            <p>Worked in Lewa's research lab under the head of predator research to identify prey species from lion and hyena scat samples. Contributed a species identification decision tree, a photographic hair reference library, and refined microscopy protocols — drawing on earth science training to improve classification accuracy for the conservancy's quarterly predation reports.</p>
+            <div class="card-footer">
+              <span class="tech-badge">Microscopy</span>
+              <span class="tech-badge">Hair ID</span>
+              <span class="tech-badge">Predator-Prey Analysis</span>
+              <span class="card-arrow">View →</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- November 2025 — UTM Pond -->
+    <div class="timeline-entry">
+      <div class="timeline-dot dot-green"></div>
+      <div class="timeline-date">November 2025</div>
+      <div class="project-card no-link">
+        <div class="card-color-bar bar-green"></div>
+        <div class="card-body">
+          <div class="card-type">
+            <span class="type-badge badge-green">Group · Academic</span>
+            <span class="card-tag">Field Methods · Water Quality · UTM</span>
+          </div>
+          <h3>Dissolved Oxygen & Rain Event Recovery — UTM Natural Pond</h3>
+          <p>Collaborated with a four-person team to study how dissolved oxygen levels recover in the UTM natural pond following summer rain events. Collected water quality measurements across four sites at multiple depths using probe instruments, analysed stratification patterns, and investigated the relationship between runoff, eutrophication, and aquatic habitat health.</p>
+          <div class="card-footer">
+            <span class="tech-badge">Field Methods</span>
+            <span class="tech-badge">Water Quality Analysis</span>
+            <span class="tech-badge">Physical Geography</span>
+            <span class="tech-badge">Data Collection</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- March 2026 — FSP -->
+    <div class="timeline-entry">
+      <div class="timeline-dot dot-green"></div>
+      <div class="timeline-date">March 2026</div>
+      <a class="project-card" href="fsp.html">
+        <div class="card-color-bar bar-green"></div>
+        <div class="card-body">
+          <div class="card-type">
+            <span class="type-badge badge-green">Group</span>
+            <span class="card-tag">Community Research · Data · Mississauga</span>
+          </div>
+          <h3>Peel Region Community Services — Gap Analysis</h3>
+          <p>Co-led a five-person team for Family Services of Peel to map and gap-analyse 51 community programs across the Peel District School Board. Identified structural gaps affecting newcomer youth, students with disabilities, and marginalised groups. Findings fed directly into FSP's service planning.</p>
+          <div class="card-footer">
+            <span class="tech-badge">Research</span>
             <span class="tech-badge">Data Mapping</span>
             <span class="tech-badge">Gap Analysis</span>
+            <span class="card-arrow">View →</span>
           </div>
         </div>
       </a>
-
-      <div class="project-card fade-up">
-        <div class="project-thumb">🌾</div>
-        <div class="project-body">
-          <p class="project-tag">Agribusiness · Operations</p>
-          <h3>Kumea Agribusiness — Logistics & Data Systems</h3>
-          <p>
-            Supported data systems and field logistics coordination for a Nairobi-based agribusiness
-            during a summer internship. Produced management briefings translating technical field
-            findings into operational decisions.
-          </p>
-          <div class="project-footer">
-            <span class="tech-badge">SQL</span>
-            <span class="tech-badge">Excel</span>
-            <span class="tech-badge">Python</span>
-          </div>
-        </div>
-      </div>
-
     </div>
-  </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience">
-    <p class="section-label fade-up">Experience</p>
-    <h2 class="fade-up">Where I've worked</h2>
-    <div class="timeline">
+  </div>
 
-      <div class="timeline-item fade-up">
-        <div class="timeline-date">Jan 2025 – Present</div>
-        <div class="timeline-content">
-          <h3>Community Program Coordinator</h3>
-          <p class="timeline-org">Family Services of Peel — Mississauga, ON</p>
-          <p class="timeline-desc">Volunteer leadership role conducting community needs assessments across Peel Region,
-          facilitating intake interviews and managing service gap analysis for senior staff.</p>
-        </div>
-      </div>
+  <div class="timeline-legend fade-up">
+    <div class="legend-item"><div class="legend-dot" style="background:#3B6FD4"></div>Solo project</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#2D7A4F"></div>Group project</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#C0392B"></div>Academic project</div>
+  </div>
+</section>
 
-      <div class="timeline-item fade-up">
-        <div class="timeline-date">Jan – Apr 2024</div>
-        <div class="timeline-content">
-          <h3>AI Research Associate</h3>
-          <p class="timeline-org">Lewa Wildlife Conservancy — Isiolo, Kenya</p>
-          <p class="timeline-desc">Developed and deployed a custom wildlife object-detection model across a 14 km
-          elephant corridor. Built data pipelines for camera trap batch processing and movement classification.</p>
-        </div>
-      </div>
+<!-- COLLABORATORS -->
+<section id="collaborators">
+  <p class="section-label fade-up">Collaborators</p>
+  <h2 class="fade-up">Organisations I've worked with</h2>
+  <p class="collab-sub fade-up">A few of the places I've had the chance to contribute to — across conservation, community, agribusiness, and research.</p>
 
-      <div class="timeline-item fade-up">
-        <div class="timeline-date">May – Aug 2024</div>
-        <div class="timeline-content">
-          <h3>Research & Operations Intern</h3>
-          <p class="timeline-org">Kumea Agribusiness — Nairobi, Kenya</p>
-          <p class="timeline-desc">Coordinated field logistics, managed client-facing data requests, and prepared
-          operational briefings for senior management.</p>
-        </div>
-      </div>
+  <div class="bubble-universe fade-up" id="bubbleUniverse">
+    <div class="bubble-tooltip" id="bubbleTip"></div>
+    <svg id="bubbleSvg" viewBox="0 0 900 500" preserveAspectRatio="xMidYMid meet">
 
-      <div class="timeline-item fade-up">
-        <div class="timeline-date">2022 – Jun 2026</div>
-        <div class="timeline-content">
-          <h3>BSc Environmental Science</h3>
-          <p class="timeline-org">University of Toronto Mississauga</p>
-          <p class="timeline-desc">Specialising in conservation technology, remote sensing, and ecological data analysis.
-          Expected graduation June 2026.</p>
-        </div>
-      </div>
+      <!-- ── STUART CHARACTER (centre ~450,250) ── -->
+      <g transform="translate(450,250)">
+        <!-- body -->
+        <ellipse cx="0" cy="62" rx="28" ry="36" fill="#C68642"/>
+        <!-- collar/shirt -->
+        <ellipse cx="0" cy="72" rx="22" ry="26" fill="#2D3A2E"/>
+        <!-- neck -->
+        <rect x="-9" y="28" width="18" height="18" rx="6" fill="#C68642"/>
+        <!-- head -->
+        <circle cx="0" cy="14" r="28" fill="#C68642"/>
+        <!-- afro -->
+        <circle cx="0" cy="-8" r="30" fill="#1A0A00"/>
+        <circle cx="-18" cy="0" r="20" fill="#1A0A00"/>
+        <circle cx="18" cy="0" r="20" fill="#1A0A00"/>
+        <circle cx="-8" cy="-22" r="18" fill="#1A0A00"/>
+        <circle cx="8" cy="-22" r="18" fill="#1A0A00"/>
+        <!-- eyes -->
+        <circle cx="-9" cy="14" r="4" fill="#fff"/>
+        <circle cx="9" cy="14" r="4" fill="#fff"/>
+        <circle cx="-8" cy="14" r="2.2" fill="#1A0A00"/>
+        <circle cx="10" cy="14" r="2.2" fill="#1A0A00"/>
+        <!-- smile -->
+        <path d="M -8 24 Q 0 30 8 24" stroke="#7A4A1A" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+        <!-- arms -->
+        <path d="M -28 50 Q -50 65 -40 85" stroke="#C68642" stroke-width="10" fill="none" stroke-linecap="round"/>
+        <path d="M 28 50 Q 50 65 40 85" stroke="#C68642" stroke-width="10" fill="none" stroke-linecap="round"/>
+      </g>
 
-    </div>
-  </section>
+      <!-- ── ORG BUBBLES ── -->
+      <!-- Lewa -->
+      <g class="org-bubble" data-tip="Conservation AI · Kenya" onclick="window.open('#','_self')" transform="translate(180,110)">
+        <circle r="68" fill="#1B4332" opacity="0.92"/>
+        <text text-anchor="middle" y="-12" font-size="22" fill="white">🦁</text>
+        <text text-anchor="middle" y="10" font-size="10" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Sans,sans-serif">Lewa Wildlife</text>
+        <text text-anchor="middle" y="24" font-size="10" fill="rgba(255,255,255,0.65)" font-family="DM Sans,sans-serif">Conservancy</text>
+      </g>
 
-  <!-- CONTACT -->
-  <section id="contact">
-    <p class="section-label">Contact</p>
-    <h2>Let's work together.</h2>
-    <p>Open to roles in conservation technology, ESG strategy, and agentic AI.
-    Based in Mississauga — available June 2026.</p>
-    <div class="hero-cta" style="justify-content: center;">
-      <a class="btn-primary" href="/cdn-cgi/l/email-protection#354641405447411b525c415440755058545c591b565a58">Send me an email</a>
-      <a class="btn-outline" href="https://linkedin.com/in/stuartgitau" target="_blank">LinkedIn</a>
-    </div>
-  </section>
+      <!-- FSP -->
+      <g class="org-bubble" data-tip="Community research · Mississauga" transform="translate(720,120)">
+        <circle r="62" fill="#1B2A4A" opacity="0.92"/>
+        <text text-anchor="middle" y="-10" font-size="20" fill="white">🤝</text>
+        <text text-anchor="middle" y="10" font-size="10" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Sans,sans-serif">Family Services</text>
+        <text text-anchor="middle" y="24" font-size="10" fill="rgba(255,255,255,0.65)" font-family="DM Sans,sans-serif">of Peel</text>
+      </g>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 Stuart Gitau · Built with HTML &amp; CSS · Hosted on GitHub Pages</p>
-  </footer>
+      <!-- Kumea -->
+      <g class="org-bubble" data-tip="Operations & data · Nairobi" transform="translate(120,320)">
+        <circle r="56" fill="#4A3520" opacity="0.92"/>
+        <text text-anchor="middle" y="-8" font-size="20" fill="white">🌾</text>
+        <text text-anchor="middle" y="10" font-size="10" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Sans,sans-serif">Kumea</text>
+        <text text-anchor="middle" y="24" font-size="10" fill="rgba(255,255,255,0.65)" font-family="DM Sans,sans-serif">Agribusiness</text>
+      </g>
 
-  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((e, i) => {
-        if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 80);
-   
+      <!-- Panocal -->
+      <g class="org-bubble" data-tip="Management internship · Nairobi" transform="translate(780,340)">
+        <circle r="54" fill="#3A2A1A" opacity="0.92"/>
+        <text text-anchor="middle" y="-8" font-size="20" fill="white">📊</text>
+        <text text-anchor="middle" y="10" font-size="10" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Sans,sans-serif">Panocal</text>
+        <text text-anchor="middle" y="24" font-size="10" fill="rgba(255,255,255,0.65)" font-family="DM Sans,sans-serif">Agribusiness</text>
+      </g>
+
+      <!-- UofT -->
+      <g class="org-bubble" data-tip="BSc Environmental Science" transform="translate(310,430)">
+        <circle r="58" fill="#002A5C" opacity="0.92"/>
+        <text text-anchor="middle" y="-8" font-size="20" fill="white">🎓</text>
+        <text text-anchor="middle" y="10" font-size="10" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Sans,sans-serif">University of</text>
+        <text text-anchor="middle" y="24" font-size="10" fill="rgba(255,255,255,0.65)" font-family="DM Sans,sans-serif">Toronto</text>
+      </g>
+
+      <!-- CSE -->
+      <g class="org-bubble" data-tip="Community leadership · UTM" transform="translate(590,430)">
+        <circle r="54" fill="#2C4A1A" opacity="0.92"/>
+        <text text-anchor="middle" y="-8" font-size="20" fill="white">🏛️</text>
+        <text text-anchor="middle" y="10" font-size="9.5" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Sans,sans-serif">Centre for Student</text>
+        <text text-anchor="middle" y="24" font-size="9.5" fill="rgba(255,255,255,0.65)" font-family="DM Sans,sans-serif">Engagement</text>
+      </g>
+
+      <!-- UTM Black Mentorship -->
+      <g class="org-bubble" data-tip="Leadership development · UTM" transform="translate(700,230)">
+        <circle r="52" fill="#3A1A4A" opacity="0.92"/>
+        <text text-anchor="middle" y="-8" font-size="20" fill="white">⭐</text>
+        <text text-anchor="middle" y="10" font-size="9" font-weight="600" fill="rgba(255,255,255,0.9)" font-family="DM Sans,sans-serif">UTM Black Alumni</text>
+        <text text-anchor="middle" y="24" font-size="9" fill="rgba(255,255,255,0.65)" font-family="DM Sans,sans-serif">Mentorship</text>
+      </g>
+
+    </svg>
+  </div>
+
+  <p class="collab-note fade-up">More collaborators coming soon — currently seeking consent to share.</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Contact</p>
+  <h2>Let's talk.</h2>
+  <p class="contact-sub">Open to roles, projects, and conversations — in climate tech, ESG, data strategy, financial analysis, and anything in between. Based in Mississauga. Available from June 2026.</p>
+  <div class="contact-links">
+    <a class="contact-link primary" href="mailto:stuart.gitau@mail.utoronto.ca">✉&nbsp; stuart.gitau@mail.utoronto.ca</a>
+    <a class="contact-link" href="https://linkedin.com/in/stuartgitau" target="_blank">LinkedIn</a>
+    <a class="contact-link" href="https://github.com/stuartwegitau-afk" target="_blank">GitHub</a>
+  </div>
+  <div class="avail-badge">
+    <span class="avail-dot"></span>
+    Available — graduating June 2026
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Stuart Gitau</span>
+  <a href="https://sgitau.com">sgitau.com</a>
+  <span>Built with HTML & CSS · GitHub Pages</span>
+</footer>
+
+<script>
+  // Fade-up scroll animations
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i*70); });
+  }, {threshold:0.08});
+  document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+
+  // Bubble tooltip
+  const tip = document.getElementById('bubbleTip');
+  const universe = document.getElementById('bubbleUniverse');
+  document.querySelectorAll('.org-bubble').forEach(b => {
+    b.addEventListener('mouseenter', e => {
+      const rect = b.getBoundingClientRect();
+      const uRect = universe.getBoundingClientRect();
+      tip.textContent = b.dataset.tip;
+      tip.style.left = (rect.left - uRect.left + rect.width/2) + 'px';
+      tip.style.top = (rect.top - uRect.top) + 'px';
+      tip.style.opacity = '1';
+    });
+    b.addEventListener('mouseleave', () => { tip.style.opacity = '0'; });
+  });
+
+  // Gentle float animation for bubbles
+  const bubbles = document.querySelectorAll('.org-bubble');
+  bubbles.forEach((b, i) => {
+    const duration = 3000 + i * 400;
+    const amplitude = 4 + i % 3;
+    let start = null;
+    const originalTransform = b.getAttribute('transform');
+    const match = originalTransform.match(/translate\(([^,]+),([^)]+)\)/);
+    if (!match) return;
+    const ox = parseFloat(match[1]);
+    const oy = parseFloat(match[2]);
+    const phase = i * 0.9;
+    function animate(ts) {
+      if (!start) start = ts;
+      const t = (ts - start) / duration;
+      const dy = Math.sin(t * Math.PI * 2 + phase) * amplitude;
+      const dx = Math.cos(t * Math.PI * 2 * 0.7 + phase) * (amplitude * 0.5);
+      b.setAttribute('transform', `translate(${ox + dx},${oy + dy})`);
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+  });
+</script>
+</body>
+</html>
