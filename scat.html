@@ -1,1 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Predator Scat Analysis — Stuart Gitau</title>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    :root{--ink:#0E1812;--forest:#1B4332;--moss:#2D6A4F;--sage:#52B788;--sage-pale:#D8F3DC;--sand:#F8F4EE;--muted:#5C6B5F;--border:#C8DACC;--white:#FFFFFF;--amber:#C8820A;--amber-pale:#FDF3E3}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;background:var(--sand);color:var(--ink);font-size:17px;line-height:1.75}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5vw;background:rgba(248,244,238,0.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    .nav-back{font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--moss);text-decoration:none;display:flex;align-items:center;gap:0.4rem}
+    .nav-back:hover{color:var(--forest)}
+    .nav-title{font-size:0.82rem;font-weight:500;color:var(--ink);opacity:0.4}
 
+    /* HERO */
+    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding:8rem 5vw 5rem;position:relative;overflow:hidden;background:#0a0a08}
+    .hero-bg{position:absolute;inset:0;background-image:url('images/lewa-ranger.jpeg');background-size:cover;background-position:center;filter:brightness(0.3) saturate(0.6);z-index:0}
+    .hero-content{position:relative;z-index:1;max-width:760px}
+    .hero-tag{font-size:0.72rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--amber);margin-bottom:1.25rem;display:flex;align-items:center;gap:0.6rem}
+    .hero-tag::before{content:'';width:24px;height:1px;background:var(--amber)}
+    .hero h1{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5vw,4rem);font-weight:300;line-height:1.08;letter-spacing:-0.02em;color:var(--white);margin-bottom:1.5rem}
+    .hero h1 em{font-style:italic;color:var(--amber)}
+    .hero-sub{font-size:1.05rem;color:rgba(255,255,255,0.6);max-width:560px;line-height:1.8;margin-bottom:2.5rem}
+    .hero-pills{display:flex;gap:1rem;flex-wrap:wrap}
+    .hero-pill{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:2rem;padding:0.45rem 1rem;font-size:0.78rem;color:rgba(255,255,255,0.7);font-weight:500}
+
+    /* SECTIONS */
+    .section{padding:5.5rem 5vw}
+    .section-inner{max-width:860px;margin:0 auto}
+    .section-label{font-size:0.7rem;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--moss);margin-bottom:0.6rem}
+    h2{font-family:'Fraunces',serif;font-size:clamp(1.6rem,2.8vw,2.3rem);font-weight:300;line-height:1.15;letter-spacing:-0.015em;color:var(--forest);margin-bottom:1.75rem}
+    p{color:var(--muted);margin-bottom:1.25rem;line-height:1.85;font-size:1rem}
+    .callout{background:var(--amber-pale);border-left:3px solid var(--amber);border-radius:0 0.75rem 0.75rem 0;padding:1.25rem 1.5rem;margin:2rem 0;font-style:italic;color:#7A4F00;font-size:0.98rem}
+    .overview{background:var(--white)}
+
+    /* STAT ROW */
+    .stat-row{display:flex;gap:2rem;flex-wrap:wrap;margin:2rem 0;padding:1.5rem;background:var(--sage-pale);border-radius:1rem}
+    .stat-item .stat-num{font-family:'Fraunces',serif;font-size:1.8rem;color:var(--forest);font-weight:300;line-height:1}
+    .stat-item .stat-label{font-size:0.78rem;color:var(--muted);margin-top:0.2rem;text-transform:uppercase;letter-spacing:0.06em}
+
+    /* PROCESS */
+    .process-section{background:var(--sand)}
+    .process-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:2rem}
+    .process-step{background:var(--white);border:1px solid var(--border);border-radius:1rem;padding:1.4rem;text-align:center}
+    .step-icon{font-size:1.6rem;margin-bottom:0.75rem}
+    .process-step h3{font-family:'Fraunces',serif;font-size:0.95rem;font-weight:400;color:var(--forest);margin-bottom:0.4rem}
+    .process-step p{font-size:0.82rem;margin:0;line-height:1.6}
+
+    /* MICROSCOPE GALLERY */
+    .micro-section{background:var(--ink)}
+    .micro-section h2{color:var(--white)}
+    .micro-section .section-label{color:var(--sage)}
+    .micro-section>div>p{color:rgba(255,255,255,0.55)}
+    .micro-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2rem}
+    .micro-img-wrap{border-radius:0.75rem;overflow:hidden;background:#000;border:1px solid rgba(255,255,255,0.08)}
+    .micro-img{width:100%;display:block;border-radius:0.75rem}
+    .micro-caption{color:rgba(255,255,255,0.45);font-size:0.8rem;margin-top:0.6rem;font-style:italic;text-align:center}
+
+    /* HAIR ANATOMY */
+    .anatomy-section{background:var(--white)}
+    .anatomy-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2rem;align-items:start}
+    .anatomy-diagram{background:var(--sand);border:1px solid var(--border);border-radius:1rem;padding:2rem;text-align:center}
+    .anatomy-diagram svg{width:100%;max-width:280px}
+    .anatomy-text h3{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:400;color:var(--forest);margin-bottom:0.75rem}
+    .anatomy-note{background:var(--amber-pale);border:1px solid #E8C57A;border-radius:0.75rem;padding:1rem 1.25rem;margin-top:1rem;font-size:0.85rem;color:#7A4F00}
+
+    /* DECISION TREE */
+    .tree-section{background:var(--sand)}
+    .tree-intro{max-width:600px;margin-bottom:2rem}
+    .tree-img-wrap{border-radius:1rem;overflow:hidden;border:2px solid var(--border);max-width:560px;margin:0 auto}
+    .tree-img{width:100%;display:block}
+    .tree-caption{text-align:center;font-size:0.82rem;color:var(--muted);margin-top:1rem;font-style:italic}
+    .tree-note{background:var(--white);border:1px solid var(--border);border-radius:0.75rem;padding:1.25rem 1.5rem;margin-top:2rem;font-size:0.88rem;color:var(--muted)}
+    .tree-note strong{color:var(--forest)}
+
+    /* CONTRIBUTION */
+    .contribution-section{background:var(--forest)}
+    .contribution-section h2{color:var(--white)}
+    .contribution-section .section-label{color:var(--sage)}
+    .contrib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:2rem}
+    .contrib-card{background:rgba(255,255,255,0.06);border:1px solid rgba(82,183,136,0.2);border-radius:1rem;padding:1.4rem}
+    .contrib-icon{font-size:1.3rem;margin-bottom:0.75rem}
+    .contrib-card h3{font-family:'Fraunces',serif;font-size:0.95rem;font-weight:400;color:rgba(255,255,255,0.85);margin-bottom:0.35rem}
+    .contrib-card p{font-size:0.83rem;color:rgba(255,255,255,0.45);margin:0;line-height:1.65}
+
+    /* NAV FOOTER */
+    .next-section{background:var(--sand);padding:4rem 5vw;border-top:1px solid var(--border)}
+    .next-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+    .next-link{display:flex;flex-direction:column;text-decoration:none;background:var(--white);border:1px solid var(--border);border-radius:1rem;padding:1.25rem 1.5rem;transition:border-color 0.2s,transform 0.2s}
+    .next-link:hover{border-color:var(--sage);transform:translateY(-2px)}
+    .next-label{font-size:0.7rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--moss);margin-bottom:0.3rem}
+    .next-title{font-family:'Fraunces',serif;font-size:1rem;font-weight:400;color:var(--forest)}
+    .back-link{font-size:0.8rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+    .back-link:hover{color:var(--forest)}
+
+    .fade{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease,transform 0.6s ease}
+    .fade.in{opacity:1;transform:translateY(0)}
+    @media(max-width:700px){.micro-grid{grid-template-columns:1fr}.anatomy-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-back" href="index.html">← Back</a>
+  <span class="nav-title">Predator Scat Analysis</span>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">Lab & Field Science · Kenya · June–July 2025</div>
+    <h1>Reading predators<br/>through their <em>prey</em></h1>
+    <p class="hero-sub">Working in Lewa's research lab under the head of predator research, I contributed to scat analysis work identifying what lions and hyenas are eating — and what that means for the conservancy's endangered species.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">Microscopy</span>
+      <span class="hero-pill">Hair Identification</span>
+      <span class="hero-pill">Predator-Prey Dynamics</span>
+      <span class="hero-pill">Decision Tree Development</span>
+    </div>
+  </div>
+</div>
+
+<!-- WHY IT MATTERS -->
+<section class="section overview">
+  <div class="section-inner fade">
+    <p class="section-label">Why it matters</p>
+    <h2>Endangered species, predator pressure, and the data in between</h2>
+    <p>Understanding what predators eat is foundational to conservation management. For Lewa and the neighbouring Borana Conservancy, this question has a specific urgency: both conservancies together host 317 of Kenya's remaining Grevy's zebra — out of a national population of just over 3,000. Knowing whether lions and hyenas are preying on Grevy's zebra, and at what rates, directly informs how the conservancy manages and protects the herd.</p>
+    <div class="callout">Scat analysis reveals what predators are consuming — which helps identify key prey species, track ecosystem interactions, and guide intervention where it matters most.</div>
+    <p>This work was led by Felix Kasyoki, head of predator research at Lewa, whose quarterly reports on predation dynamics across the landscape depend on consistent, accurate scat identification. During my placement, I worked alongside Felix to assist with this process — and contributed to improving its accuracy and documentation.</p>
+    <div class="stat-row">
+      <div class="stat-item"><div class="stat-num">317</div><div class="stat-label">Grevy's zebra at Lewa/Borana</div></div>
+      <div class="stat-item"><div class="stat-num">~3,000</div><div class="stat-label">Kenya's total Grevy's population</div></div>
+      <div class="stat-item"><div class="stat-num">20</div><div class="stat-label">Hair strands per scat sample</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section process-section">
+  <div class="section-inner fade">
+    <p class="section-label">The Lab Process</p>
+    <h2>From field collection to microscope slide</h2>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-icon">🌿</div>
+        <h3>Collection</h3>
+        <p>Scat samples from lions and hyenas collected across the Lewa and Borana landscape during field days.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-icon">🌡️</div>
+        <h3>Drying</h3>
+        <p>Samples are dried to remove moisture and begin separating organic material for analysis.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-icon">💧</div>
+        <h3>Rehydration & washing</h3>
+        <p>Dried samples are rehydrated and washed to isolate hair strands and other identifiable material.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-icon">🔬</div>
+        <h3>Microscope mounting</h3>
+        <p>20 hair strands collected per sample, mounted on slides for microscopic examination of medulla and cortex structure.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MICROSCOPE IMAGES -->
+<section class="section micro-section">
+  <div class="section-inner fade">
+    <p class="section-label">Under the Microscope</p>
+    <h2>Hair structure as a species identifier</h2>
+    <p>Each animal species has a uniquely structured hair strand. Differentiation requires careful analysis of the medulla (the innermost, darker section) and the cortex (the outer layer) — looking at size, colour, breakage patterns, and overall morphology.</p>
+    <div class="micro-grid">
+      <div>
+        <div class="micro-img-wrap">
+          <img class="micro-img" src="images/scat-hair-1.jpeg" alt="Hair strand under microscope — single strand showing medulla and cortex"/>
+        </div>
+        <p class="micro-caption">Single hair strand under microscope — the dark inner section is the medulla, surrounded by the lighter cortex layer.</p>
+      </div>
+      <div>
+        <div class="micro-img-wrap">
+          <img class="micro-img" src="images/scat-hair-2.jpeg" alt="Multiple hair strands under microscope — showing structural comparison"/>
+        </div>
+        <p class="micro-caption">Multiple strands mounted together — comparing structure, thickness, and tip morphology across specimens from the same sample.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HAIR ANATOMY -->
+<section class="section anatomy-section">
+  <div class="section-inner fade">
+    <p class="section-label">Hair Identification</p>
+    <h2>What you're actually looking at</h2>
+    <div class="anatomy-grid">
+      <div>
+        <div class="anatomy-diagram">
+          <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Hair strand illustration -->
+            <defs>
+              <linearGradient id="cortexGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#C8DACC"/>
+                <stop offset="50%" stop-color="#EBE7DC"/>
+                <stop offset="100%" stop-color="#C8DACC"/>
+              </linearGradient>
+              <linearGradient id="medullaGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#3A2A1A"/>
+                <stop offset="50%" stop-color="#5C4A2A"/>
+                <stop offset="100%" stop-color="#3A2A1A"/>
+              </linearGradient>
+            </defs>
+            <!-- Cortex (outer) -->
+            <ellipse cx="100" cy="150" rx="30" ry="130" fill="url(#cortexGrad)" stroke="#C8DACC" stroke-width="1"/>
+            <!-- Medulla (inner) -->
+            <ellipse cx="100" cy="150" rx="10" ry="115" fill="url(#medullaGrad)"/>
+            <!-- Tip -->
+            <ellipse cx="100" cy="25" rx="4" ry="12" fill="#3A2A1A" opacity="0.7"/>
+            <!-- Labels -->
+            <text x="145" y="100" font-size="11" fill="#5C6B5F" font-family="DM Sans,sans-serif">Cortex</text>
+            <line x1="130" y1="98" x2="110" y2="105" stroke="#C8DACC" stroke-width="1"/>
+            <text x="145" y="165" font-size="11" fill="#5C6B5F" font-family="DM Sans,sans-serif">Medulla</text>
+            <line x1="130" y1="163" x2="112" y2="155" stroke="#3A2A1A" stroke-width="1"/>
+            <text x="85" y="285" font-size="10" fill="#5C6B5F" font-family="DM Sans,sans-serif" text-anchor="middle">Root</text>
+          </svg>
+          <p style="font-size:0.75rem;color:var(--muted);margin-top:0.5rem">Cross-section diagram — hair strand anatomy</p>
+        </div>
+      </div>
+      <div class="anatomy-text">
+        <h3>The medulla and cortex tell the story</h3>
+        <p>Every mammal species produces hair with a distinct internal structure. The medulla — the dark inner core — varies in width, continuity, and patterning between species. The cortex surrounds it and differs in colour, texture, and thickness.</p>
+        <p>Identifying a hair strand to species level means examining: whether the medulla is continuous or fragmented, the relative width of medulla to cortex, the shape of the hair tip, the colour and texture of the cortex, and any distinctive features like segmentation.</p>
+        <div class="anatomy-note">
+          <strong>The challenge:</strong> Many prey species share very similar hair structure — particularly Grevy's vs plains zebra, and different antelope species. Accurate identification requires cross-referencing with a reference library and applying consistent decision criteria.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DECISION TREE -->
+<section class="section tree-section">
+  <div class="section-inner fade">
+    <p class="section-label">My Contribution</p>
+    <h2>Building a better identification framework</h2>
+    <div class="tree-intro">
+      <p>Drawing on guidance from Felix and existing reference material, I worked to refine and improve the identification process. This included improving reference sketches of known species, taking photographs of actual hair samples under the microscope for a visual reference library, and — the most significant contribution — developing a decision tree to systematise the identification logic.</p>
+      <p>My university training in earth science and mineral identification — which involves similar logic: classifying samples by physical properties under magnification — gave me a useful framework to apply here.</p>
+    </div>
+    <div class="tree-img-wrap">
+      <img class="tree-img" src="images/scat-decision-tree.png" alt="Hair identification decision tree for wild animal species at Lewa"/>
+    </div>
+    <p class="tree-caption">The hair identification decision tree developed during the placement — classifying wild animal species by medulla structure, cortex properties, and tip morphology.</p>
+    <div class="tree-note">
+      <strong>How the tree works:</strong> The first branch asks whether the hair's medulla is disjointed or continuous. This single property splits most species into two groups — those with fragmented medulla patterns (like Grevy's zebra variants, buffalo, impala) and those with continuous patterns (like plain zebra variants, giraffe, waterbuck). Subsequent branches narrow down by cortex colour, tip shape, and strand thickness until a species identification is reached.
+    </div>
+  </div>
+</section>
+
+<!-- CONTRIBUTION SUMMARY -->
+<section class="section contribution-section">
+  <div class="section-inner fade">
+    <p class="section-label">What I contributed</p>
+    <h2>Beyond the protocol</h2>
+    <div class="contrib-grid">
+      <div class="contrib-card">
+        <div class="contrib-icon">🌿</div>
+        <h3>Decision tree development</h3>
+        <p>Built a systematic identification framework to guide analysts through species classification by hair structure properties step-by-step.</p>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-icon">📸</div>
+        <h3>Visual reference library</h3>
+        <p>Photographed actual hair samples under the microscope to create a photographic reference library to support future identification work.</p>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-icon">✏️</div>
+        <h3>Improved reference sketches</h3>
+        <p>Refined the hand-drawn reference sketches used by analysts to compare microscope observations against known species profiles.</p>
+      </div>
+      <div class="contrib-card">
+        <div class="contrib-icon">🎓</div>
+        <h3>Cross-disciplinary application</h3>
+        <p>Applied earth science and mineral identification methodology from university training to a biological classification challenge — an unexpected but effective transfer of skills.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="next-section">
+  <div class="next-inner">
+    <a class="next-link" href="lewa.html">
+      <span class="next-label">← Also from this placement</span>
+      <span class="next-title">Wildlife AI Detection Model</span>
+    </a>
+    <a class="back-link" href="index.html">← All Projects</a>
+  </div>
+</div>
+
+<script>
+  const obs=new IntersectionObserver(entries=>{entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('in'),i*100)});},{threshold:0.08});
+  document.querySelectorAll('.fade').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
